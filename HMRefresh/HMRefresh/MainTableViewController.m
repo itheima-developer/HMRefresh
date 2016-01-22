@@ -21,7 +21,8 @@
         _demoControllers = @[
                              @{@"groupName": @"表格演练",
                                @"controllers":
-                                   @[@{@"name": @"简单表格演练", @"clsName": @"SimpleTableViewController"}]
+                                   @[@{@"name": @"简单表格演练", @"clsName": @"SimpleTableViewController"},
+                                     @{@"name": @"自定义表格演练", @"clsName": @"CustomTableViewController"},]
                                },
                              @{@"groupName": @"CollectionView演练",
                                @"controllers":

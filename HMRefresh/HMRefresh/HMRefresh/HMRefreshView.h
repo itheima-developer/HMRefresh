@@ -12,13 +12,13 @@
 @protocol HMRefreshViewDelegate <NSObject>
 
 /// 下拉提示图像
-@property (nonatomic) UIImageView *pulldownIcon;
+@property (nonatomic, readonly) UIImageView *pulldownIcon;
 /// 刷新指示器
-@property (nonatomic) UIActivityIndicatorView *refreshIndicator;
+@property (nonatomic, readonly) UIActivityIndicatorView *refreshIndicator;
 /// 提示标签
-@property (nonatomic) UILabel *tipLabel;
+@property (nonatomic, readonly) UILabel *tipLabel;
 /// 刷新时间标签
-@property (nonatomic) UILabel *timeLabel;
+@property (nonatomic, readonly) UILabel *timeLabel;
 
 /// 开始动画
 - (void)startAnimating;

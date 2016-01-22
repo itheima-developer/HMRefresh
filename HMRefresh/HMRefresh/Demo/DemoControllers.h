@@ -7,4 +7,5 @@
 //
 
 #import "SimpleTableViewController.h"
+#import "CustomTableViewController.h"
 #import "SimpleCollectionViewController.h"

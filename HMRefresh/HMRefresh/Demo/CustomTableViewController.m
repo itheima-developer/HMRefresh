@@ -1,20 +1,21 @@
 //
-//  SimpleTableViewController.m
+//  CustomTableViewController.m
 //  HMRefresh
 //
-//  Created by 刘凡 on 16/1/21.
+//  Created by 刘凡 on 16/1/22.
 //  Copyright © 2016年 itheima. All rights reserved.
 //
 
-#import "SimpleTableViewController.h"
+#import "CustomTableViewController.h"
 #import "DataModel.h"
 #import "HMRefreshControl.h"
+#import "HMRefreshView.h"
 
-@interface SimpleTableViewController ()
+@interface CustomTableViewController ()
 @property (nonatomic) DataModel *dataModel;
 @end
 
-@implementation SimpleTableViewController
+@implementation CustomTableViewController
 
 - (DataModel *)dataModel {
     if (_dataModel == nil) {
@@ -29,8 +30,12 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
     // 添加刷新控件
-    self.refreshControl = [[HMRefreshControl alloc] init];
+    HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
+    self.refreshControl = refreshControl;
     [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    
+    UINib *nib = [UINib nibWithNibName:@"DemoRefreshView" bundle:nil];
+    refreshControl.pulldownView = [nib instantiateWithOwner:nil options:nil].lastObject;
     
     [self loadData];
 }
