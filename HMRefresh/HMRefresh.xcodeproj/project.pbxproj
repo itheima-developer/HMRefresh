@@ -17,6 +17,7 @@
 		C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DE21C50DA1C00A793A4 /* SimpleTableViewController.m */; };
 		C2456DF01C51B8A000A793A4 /* HMRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */; };
 		C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */; };
+		C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DF31C51BC8500A793A4 /* HMRefreshControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,8 @@
 		C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HMRefresh.bundle; sourceTree = "<group>"; };
 		C2456DEE1C51B8A000A793A4 /* HMRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRefreshView.h; sourceTree = "<group>"; };
 		C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshView.m; sourceTree = "<group>"; };
+		C2456DF21C51BC8500A793A4 /* HMRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRefreshControl.h; sourceTree = "<group>"; };
+		C2456DF31C51BC8500A793A4 /* HMRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */,
+				C2456DF21C51BC8500A793A4 /* HMRefreshControl.h */,
+				C2456DF31C51BC8500A793A4 /* HMRefreshControl.m */,
 				C2456DEE1C51B8A000A793A4 /* HMRefreshView.h */,
 				C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */,
 			);
@@ -196,6 +201,7 @@
 			files = (
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
 				C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */,
+				C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
 				C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */,
 				C2456DC61C50CF0900A793A4 /* AppDelegate.m in Sources */,

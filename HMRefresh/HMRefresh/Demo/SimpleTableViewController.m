@@ -9,6 +9,7 @@
 #import "SimpleTableViewController.h"
 #import "DataModel.h"
 #import "HMRefreshView.h"
+#import "HMRefreshControl.h"
 
 @interface SimpleTableViewController ()
 @property (nonatomic) DataModel *dataModel;
@@ -28,6 +29,10 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
+    // 添加刷新控件
+    self.refreshControl = [[HMRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    
     // 测试刷新视图
     self.tableView.tableHeaderView = [[HMRefreshView alloc] init];
     self.tableView.tableHeaderView.backgroundColor = [UIColor orangeColor];
@@ -39,7 +44,15 @@
 
 - (void)loadData {
 
-    [self.dataModel loadData:NO completion:^{
+    HMRefreshControl *refreshControl = (HMRefreshControl *)self.refreshControl;
+
+    // 开始刷新
+    [refreshControl beginRefreshing];
+    [self.dataModel loadData:refreshControl.isPullupRefresh completion:^{
+        // 结束刷新
+        [refreshControl endRefreshing];
+        
+        // 刷新表格数据
         [self.tableView reloadData];
     }];
 }
