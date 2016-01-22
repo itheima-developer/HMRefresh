@@ -15,7 +15,6 @@
 ## 屏幕截图
 
 ![](https://github.com/itheima-developer/HMRefresh/blob/master/screenshots/tableview1.gif?raw=true">)
-![](https://github.com/itheima-developer/HMRefresh/blob/master/screenshots/tableview2.gif?raw=true">)
 ![](https://github.com/itheima-developer/HMRefresh/blob/master/screenshots/collectionview1.gif?raw=true">)
 
 ## 系统支持
