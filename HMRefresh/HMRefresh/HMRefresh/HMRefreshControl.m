@@ -53,6 +53,8 @@ typedef enum : NSUInteger {
         _calendar = [NSCalendar currentCalendar];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self prepareUI];
+            
             [self addObserver:self forKeyPath:@"frame" options:0 context:nil];
         });
     }
@@ -116,10 +118,6 @@ typedef enum : NSUInteger {
 
 - (void)beginRefreshing {
     NSLog(@"开始刷新");
-    
-    if (_contentView == nil) {
-        [self prepareUI];
-    }
     
     if (!_isPullupRefresh) {
         [super beginRefreshing];
@@ -351,7 +349,7 @@ typedef enum : NSUInteger {
         self.pulldownView = [[HMRefreshView alloc] init];
     }
     self.pulldownView.tipLabel.text = self.normalString;
-    self.pulldownView.pulldownIcon.hidden = YES;
+    self.pulldownView.pulldownIcon.hidden = NO;
     [_contentView addSubview:self.pulldownView];
     
     // 4. 上拉刷新视图
