@@ -53,8 +53,6 @@ typedef enum : NSUInteger {
         _calendar = [NSCalendar currentCalendar];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self prepareUI];
-            
             [self addObserver:self forKeyPath:@"frame" options:0 context:nil];
         });
     }
@@ -119,8 +117,14 @@ typedef enum : NSUInteger {
 - (void)beginRefreshing {
     NSLog(@"开始刷新");
     
+    if (_contentView == nil) {
+        [self prepareUI];
+    }
+    
     if (!_isPullupRefresh) {
         [super beginRefreshing];
+        
+        [self.pulldownView startAnimating];
         _refreshState = HMRefreshStateRefreshing;
     } else {
         self.pullupView.tipLabel.text = @"正在刷新数据...";
@@ -131,8 +135,6 @@ typedef enum : NSUInteger {
     NSLog(@"结束刷新");
     [super endRefreshing];
     [self showRefreshDate:[NSDate date]];
-    
-    _isRefreshing = NO;
     
     if (_isPullupRefresh) {
         [self.pullupView stopAnimating];
@@ -154,6 +156,8 @@ typedef enum : NSUInteger {
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setPullupViewLocation];
+        
+        _isRefreshing = NO;
     });
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -304,7 +308,6 @@ typedef enum : NSUInteger {
                 self.pulldownView.tipLabel.text = @"正在刷新数据...";
                 
                 self.pulldownView.pulldownIcon.hidden = YES;
-                [self.pulldownView.refreshIndicator startAnimating];
                 
                 if (!_isRefreshing) {
                     _isRefreshing = YES;
@@ -354,6 +357,7 @@ typedef enum : NSUInteger {
     if (scrollView == nil) {
         return;
     }
+    scrollView.alwaysBounceVertical = YES;
     
     // 2> 添加刷新视图
     if (self.pullupView == nil) {
@@ -381,7 +385,7 @@ typedef enum : NSUInteger {
     }
     
     CGRect rect = self.pullupView.bounds;
-    if (scrollView.contentSize.height < scrollView.bounds.size.height) {
+    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y - self.frame.origin.y) {
         CGSize size = scrollView.bounds.size;
         
         size.height += scrollView.contentOffset.y - self.frame.origin.y;

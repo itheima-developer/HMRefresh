@@ -49,7 +49,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
     
     [self.collectionView addSubview:refreshControl];
-    self.collectionView.alwaysBounceVertical = YES;
     
     [self loadData:refreshControl];
 }
