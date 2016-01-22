@@ -11,12 +11,12 @@
 
 @interface MainTableViewController ()
 /// 演示控制器数组
-@property (nonatomic) NSArray *demoControllers;
+@property (nonatomic) NSArray <NSDictionary *>*demoControllers;
 @end
 
 @implementation MainTableViewController
 
-- (NSArray *)demoControllers {
+- (NSArray<NSDictionary *> *)demoControllers {
     if (_demoControllers == nil) {
         _demoControllers = @[
                              @{@"groupName": @"表格演练",
@@ -56,6 +56,7 @@
     return  self.demoControllers[section][@"groupName"];
 }
 
+#pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDictionary *controllerDict = [self controllerDictWithIndexPath:indexPath];
