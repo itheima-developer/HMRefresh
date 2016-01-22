@@ -12,6 +12,12 @@
 * 预加载数据功能，当显示最后一个 cell 时，能够自动刷新后续数据，网络流畅时，用户看不到上拉视图，提供更加流畅的用户体验
 * 无数据设置，当重复上拉刷新数据没有结果时，会停止上拉刷新，不会频繁发起网络请求
 
+## 屏幕截图
+
+![](https://github.com/itheima-developer/HMRefresh/blob/master/screenshots/tableview1.gif?raw=true">)
+![](https://github.com/itheima-developer/HMRefresh/blob/master/screenshots/tableview2.gif?raw=true">)
+![](https://github.com/itheima-developer/HMRefresh/blob/master/screenshots/collectionview1.gif?raw=true">)
+
 ## 系统支持
 
 * iOS 8.0+
