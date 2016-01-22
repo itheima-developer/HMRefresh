@@ -8,6 +8,7 @@
 
 #import "SimpleTableViewController.h"
 #import "DataModel.h"
+#import "HMRefreshView.h"
 
 @interface SimpleTableViewController ()
 @property (nonatomic) DataModel *dataModel;
@@ -26,6 +27,12 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    
+    // 测试刷新视图
+    self.tableView.tableHeaderView = [[HMRefreshView alloc] init];
+    self.tableView.tableHeaderView.backgroundColor = [UIColor orangeColor];
+    self.tableView.tableFooterView = [[HMRefreshView alloc] init];
+    self.tableView.tableFooterView.backgroundColor = [UIColor yellowColor];
     
     [self loadData];
 }

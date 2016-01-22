@@ -15,6 +15,8 @@
 		C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DDB1C50D8E000A793A4 /* DataModel.m */; };
 		C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DDE1C50D94E00A793A4 /* MainTableViewController.m */; };
 		C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DE21C50DA1C00A793A4 /* SimpleTableViewController.m */; };
+		C2456DF01C51B8A000A793A4 /* HMRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */; };
+		C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,9 @@
 		C2456DE11C50DA1C00A793A4 /* SimpleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTableViewController.h; sourceTree = "<group>"; };
 		C2456DE21C50DA1C00A793A4 /* SimpleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleTableViewController.m; sourceTree = "<group>"; };
 		C2456DE41C50DA4000A793A4 /* DemoControllers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoControllers.h; sourceTree = "<group>"; };
+		C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HMRefresh.bundle; sourceTree = "<group>"; };
+		C2456DEE1C51B8A000A793A4 /* HMRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRefreshView.h; sourceTree = "<group>"; };
+		C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +97,9 @@
 		C2456DD81C50D8BA00A793A4 /* HMRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */,
+				C2456DEE1C51B8A000A793A4 /* HMRefreshView.h */,
+				C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */,
 			);
 			path = HMRefresh;
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2456DF01C51B8A000A793A4 /* HMRefresh.bundle in Resources */,
 				C2456DD11C50CF0900A793A4 /* LaunchScreen.storyboard in Resources */,
 				C2456DCE1C50CF0900A793A4 /* Assets.xcassets in Resources */,
 				C2456DCC1C50CF0900A793A4 /* Main.storyboard in Resources */,
@@ -186,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
+				C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
 				C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */,
 				C2456DC61C50CF0900A793A4 /* AppDelegate.m in Sources */,
@@ -338,6 +348,7 @@
 				C2456DD71C50CF0900A793A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
