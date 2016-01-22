@@ -31,14 +31,18 @@ typedef enum : NSUInteger {
     SEL __action;
     
     BOOL _isRefreshing;
-    
     UIView *_contentView;
+    CGFloat _preOffsetY;
+    NSIndexPath *_prePullupIndexPath;
+    NSInteger _retryTimes;
 }
 
 #pragma mark - 构造函数
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _pullupRetryTimes = 3;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self prepareUI];
             
@@ -74,9 +78,11 @@ typedef enum : NSUInteger {
 - (void)beginRefreshing {
     NSLog(@"开始刷新");
     
-    if (!self.isPullupRefresh) {
+    if (!_isPullupRefresh) {
         [super beginRefreshing];
-        self.refreshState = HMRefreshStateRefreshing;
+        _refreshState = HMRefreshStateRefreshing;
+    } else {
+        self.pullupView.tipLabel.text = @"正在刷新数据...";
     }
 }
 
@@ -85,6 +91,26 @@ typedef enum : NSUInteger {
     [super endRefreshing];
     
     _isRefreshing = NO;
+    
+    if (_isPullupRefresh) {
+        [self.pullupView stopAnimating];
+        _isPullupRefresh = NO;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self lastIndexPath] compare:_prePullupIndexPath] == NSOrderedSame) {
+                _retryTimes++;
+                self.pullupView.tipLabel.text = @"没有新数据";
+            } else {
+                _retryTimes = 0;
+            }
+            [self setPullupViewLocation];
+        });
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setPullupViewLocation];
+    });
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.pulldownView.refreshIndicator stopAnimating];
@@ -109,6 +135,14 @@ typedef enum : NSUInteger {
         return;
     }
     
+    if (scrollView.contentOffset.y + scrollView.contentInset.top > 0) {
+        if (_preOffsetY < scrollView.contentOffset.y) {
+            [self checkPullup];
+        }
+        _preOffsetY = scrollView.contentOffset.y;
+        return;
+    }
+    
     if (scrollView.isDragging) {
         if (self.refreshState == HMRefreshStateNormal && self.frame.origin.y < HMRefreshControlOffset) {
             self.refreshState = HMRefreshStatePulling;
@@ -128,6 +162,65 @@ typedef enum : NSUInteger {
     }
     
     return (UIScrollView *)self.superview;
+}
+
+/// 检查上拉刷新
+- (void)checkPullup {
+    
+    // TODO: - 暂时仅处理 tableView
+    if (![self.scrollView isKindOfClass:[UITableView class]]) {
+        return;
+    }
+    
+    if (_retryTimes == self.pullupRetryTimes) {
+        return;
+    }
+    
+    UITableView *parentView = (UITableView *)self.scrollView;
+    
+    _prePullupIndexPath = [self lastIndexPath];
+    if (_prePullupIndexPath == nil) {
+        self.pullupView.tipLabel.text = @"没有数据，无法上拉刷新";
+        return;
+    }
+    
+    UITableViewCell *cell = [parentView cellForRowAtIndexPath:_prePullupIndexPath];
+    
+    if (cell == nil) {
+        return;
+    }
+    
+    if (!self.pullupView.isAnimating) {
+        _isPullupRefresh = YES;
+        [self.pullupView startAnimating];
+        
+        [self sendAction:__action to:__target forEvent:[[UIEvent alloc] init]];
+    }
+}
+
+- (NSIndexPath *)lastIndexPath {
+    
+    if (![self.scrollView isKindOfClass:[UITableView class]]) {
+        return nil;
+    }
+    
+    UITableView *parentView = (UITableView *)self.scrollView;
+    
+    NSInteger section = [parentView numberOfSections];
+    if (section <= 0) {
+        return nil;
+    }
+    
+    NSInteger row;
+    do {
+        row = [parentView numberOfRowsInSection:(--section)];
+    } while (row <= 0 && section > 0);
+    
+    if (row <= 0) {
+        return nil;
+    }
+    
+    return [NSIndexPath indexPathForRow:row - 1 inSection:section];
 }
 
 - (void)setRefreshState:(HMRefreshState)refreshState {
@@ -198,6 +291,48 @@ typedef enum : NSUInteger {
         self.pulldownView = [[HMRefreshView alloc] init];
     }
     [_contentView addSubview:self.pulldownView];
+    
+    // 4. 上拉刷新视图
+    // 1> 父视图
+    UIScrollView *scrollView = [self scrollView];
+    if (scrollView == nil) {
+        return;
+    }
+    
+    // 2> 添加刷新视图
+    if (self.pullupView == nil) {
+        self.pullupView = [[HMRefreshView alloc] init];
+        self.pullupView.backgroundColor = [UIColor greenColor];
+    }
+    [scrollView addSubview:self.pullupView];
+    
+    // 3> 调整底部间距
+    UIEdgeInsets inset = scrollView.contentInset;
+    inset.bottom += self.pullupView.bounds.size.height;
+    scrollView.contentInset = inset;
+    
+    [self setPullupViewLocation];
+}
+
+/// 设置上拉视图位置
+- (void)setPullupViewLocation {
+    
+    UIScrollView *scrollView = [self scrollView];
+    if (scrollView == nil) {
+        return;
+    }
+    
+    CGRect rect = self.pullupView.bounds;
+    
+    if (scrollView.contentSize.height < scrollView.bounds.size.height) {
+        scrollView.contentSize = scrollView.bounds.size;
+    }
+    
+    rect.origin.y = scrollView.contentSize.height;
+    rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
+    
+    self.pullupView.frame = rect;
+    self.pullupView.backgroundColor = [UIColor greenColor];
 }
 
 @end

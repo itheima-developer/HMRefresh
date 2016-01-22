@@ -17,4 +17,6 @@
 @property (nonatomic) HMRefreshView *pullupView;
 /// 是否上拉刷新
 @property (nonatomic, readonly) BOOL isPullupRefresh;
+/// 如果没有数据，上拉刷新重试次数，默认为 3
+@property (nonatomic) NSInteger pullupRetryTimes;
 @end

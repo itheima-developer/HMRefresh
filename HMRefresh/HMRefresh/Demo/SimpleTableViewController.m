@@ -33,17 +33,13 @@
     self.refreshControl = [[HMRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
     
-    // 测试刷新视图
-    self.tableView.tableFooterView = [[HMRefreshView alloc] init];
-    self.tableView.tableFooterView.backgroundColor = [UIColor yellowColor];
-    
     [self loadData];
 }
 
 - (void)loadData {
-
+    
     HMRefreshControl *refreshControl = (HMRefreshControl *)self.refreshControl;
-
+    
     // 开始刷新
     [refreshControl beginRefreshing];
     [self.dataModel loadData:refreshControl.isPullupRefresh completion:^{

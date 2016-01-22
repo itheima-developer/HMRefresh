@@ -69,7 +69,6 @@
         _tipLabel.font = [UIFont systemFontOfSize:13];
         _tipLabel.textColor = [UIColor darkGrayColor];
         _tipLabel.text = @"正在刷新数据...";
-        [_tipLabel sizeToFit];
     }
     return _tipLabel;
 }
@@ -81,7 +80,6 @@
         _timeLabel.font = [UIFont systemFontOfSize:10];
         _timeLabel.textColor = [UIColor grayColor];
         _timeLabel.text = @"上次刷新 2016-01-01 24:59";
-        [_timeLabel sizeToFit];
     }
     return _timeLabel;
 }
