@@ -153,6 +153,9 @@ typedef enum : NSUInteger {
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        // 解决刷新完成跳跃问题
+        [self.scrollView setContentOffset:CGPointMake(0, -self.scrollView.contentInset.top) animated:NO];
+        
         [self setPullupViewLocation];
         
         _isRefreshing = NO;
