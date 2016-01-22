@@ -24,7 +24,7 @@
 
 #pragma mark - 构造函数
 - (instancetype)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self = [super initWithFrame:CGRectMake(0, 0, 220, 44)];
     if (self) {
         [self addSubview:self.containerView];
         
@@ -38,12 +38,6 @@
 
 - (void)dealloc {
     NSLog(@"%s", __FUNCTION__);
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    self.containerView.center = CGPointMake(self.center.x, self.bounds.size.height * 0.5);
 }
 
 #pragma mark - HMRefreshViewDelegate

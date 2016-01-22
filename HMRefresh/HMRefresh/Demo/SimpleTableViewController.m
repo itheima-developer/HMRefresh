@@ -34,8 +34,6 @@
     [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
     
     // 测试刷新视图
-    self.tableView.tableHeaderView = [[HMRefreshView alloc] init];
-    self.tableView.tableHeaderView.backgroundColor = [UIColor orangeColor];
     self.tableView.tableFooterView = [[HMRefreshView alloc] init];
     self.tableView.tableFooterView.backgroundColor = [UIColor yellowColor];
     
