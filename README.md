@@ -1,4 +1,7 @@
+![](http://www.itheima.com/uploads/2015/08/198x57.png)
+
 # HMRefresh
+
 轻量级的上拉／下拉刷新控件
 
 ## 功能
@@ -122,3 +125,39 @@ $ pod update
 
 @end
 ```
+
+### Swift
+
+* 导入框架
+
+```swift
+import HMRefresh
+```
+
+* 在 TableViewController 的 viewDidLoad 中设置刷新控件
+
+```swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    self.refreshControl = HMRefreshControl()
+    self.refreshControl?.addTarget(self, action: "loadData:", forControlEvents: .ValueChanged)
+}
+```
+
+* 刷新数据方法
+
+```swift
+@objc private func loadData(refreshControl: HMRefreshControl) {
+
+    refreshControl.beginRefreshing()
+    dataModel.loadData(refreshControl.isPullupRefresh) {
+        refreshControl.endRefreshing()
+
+        self.tableView.reloadData();
+    }
+}
+```
+
+
+
