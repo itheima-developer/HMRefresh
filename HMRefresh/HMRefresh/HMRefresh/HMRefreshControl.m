@@ -136,9 +136,9 @@ typedef enum : NSUInteger {
     
     if (_isPullupRefresh) {
         [self.pullupView stopAnimating];
-        _isPullupRefresh = NO;
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
             if ([[self lastIndexPath] compare:_prePullupIndexPath] == NSOrderedSame) {
                 _retryTimes++;
                 self.pullupView.tipLabel.text = @"没有新数据";
@@ -146,6 +146,8 @@ typedef enum : NSUInteger {
                 _retryTimes = 0;
             }
             [self setPullupViewLocation];
+            
+            _isPullupRefresh = NO;
         });
         return;
     }
@@ -213,7 +215,6 @@ typedef enum : NSUInteger {
         return;
     }
     
-    //    NSLog(@"%zd - %zd", _retryTimes, _pullupRetryTimes);
     if (_retryTimes >= self.pullupRetryTimes) {
         return;
     }
@@ -380,9 +381,11 @@ typedef enum : NSUInteger {
     }
     
     CGRect rect = self.pullupView.bounds;
-    
     if (scrollView.contentSize.height < scrollView.bounds.size.height) {
-        scrollView.contentSize = scrollView.bounds.size;
+        CGSize size = scrollView.bounds.size;
+        
+        size.height += scrollView.contentOffset.y - self.frame.origin.y;
+        scrollView.contentSize = size;
     }
     
     rect.origin.y = scrollView.contentSize.height;
