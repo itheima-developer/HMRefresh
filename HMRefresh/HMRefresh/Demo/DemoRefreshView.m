@@ -12,13 +12,10 @@
 @property (nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
 @property (nonatomic) IBOutlet UILabel *tipLabel;
 @property (nonatomic) IBOutlet UIImageView *pulldownIcon;
+@property (nonatomic) IBOutlet UILabel *timeLabel;
 @end
 
 @implementation DemoRefreshView
-
-- (UILabel *)timeLabel {
-    return nil;
-}
 
 - (void)startAnimating {
     [self.refreshIndicator startAnimating];

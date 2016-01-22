@@ -76,21 +76,21 @@ typedef enum : NSUInteger {
     
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:HMRefreshControlLastRefreshDateKey];
     if (date == nil) {
-        return @"上次刷新 无";
+        return [self.lastRefreshString stringByAppendingString:@"无"];
     }
     
     NSString *fmt = @" HH:mm";
     
     if ([_calendar isDateInToday:date]) {
-        fmt = [@"上次刷新 今天" stringByAppendingString:fmt];
+        fmt = [@"今天 " stringByAppendingString:fmt];
     } else if ([_calendar isDateInYesterday:date]) {
-        fmt = [@"上次刷新 昨天" stringByAppendingString:fmt];
+        fmt = [@"昨天 " stringByAppendingString:fmt];
     } else {
-        fmt = [@"上次刷新 yyyy-MM-dd " stringByAppendingString:fmt];
+        fmt = [@"yyyy-MM-dd " stringByAppendingString:fmt];
     }
     _dateFormatter.dateFormat = fmt;
     
-    return [_dateFormatter stringFromDate:date];
+    return [self.lastRefreshString stringByAppendingString:[_dateFormatter stringFromDate:date]];
 }
 
 - (void)showRefreshDate:(NSDate *)date {
@@ -123,11 +123,11 @@ typedef enum : NSUInteger {
     
     if (!_isPullupRefresh) {
         [super beginRefreshing];
+        _isRefreshing = YES;
         
-        [self.pulldownView startAnimating];
-        _refreshState = HMRefreshStateRefreshing;
+        self.refreshState = HMRefreshStateRefreshing;
     } else {
-        self.pullupView.tipLabel.text = @"正在刷新数据...";
+        self.pullupView.tipLabel.text = self.refreshingString;
     }
 }
 
@@ -143,7 +143,7 @@ typedef enum : NSUInteger {
             
             if ([[self lastIndexPath] compare:_prePullupIndexPath] == NSOrderedSame) {
                 _retryTimes++;
-                self.pullupView.tipLabel.text = @"没有新数据";
+                self.pullupView.tipLabel.text = self.noDataString;
             } else {
                 _retryTimes = 0;
             }
@@ -165,7 +165,7 @@ typedef enum : NSUInteger {
         self.pulldownView.pulldownIcon.hidden = NO;
         
         self.pulldownView.pulldownIcon.transform = CGAffineTransformIdentity;
-        self.pulldownView.tipLabel.text = @"下拉刷新数据";
+        self.pulldownView.tipLabel.text = self.normalString;
         
         _refreshState = HMRefreshStateNormal;
     });
@@ -220,6 +220,7 @@ typedef enum : NSUInteger {
     }
     
     if (_retryTimes >= self.pullupRetryTimes) {
+        self.pullupView.tipLabel.text = self.donotPullupString;
         return;
     }
     
@@ -227,7 +228,7 @@ typedef enum : NSUInteger {
     
     _prePullupIndexPath = [self lastIndexPath];
     if (_prePullupIndexPath == nil) {
-        self.pullupView.tipLabel.text = @"没有数据，无法上拉刷新";
+        self.pullupView.tipLabel.text = self.noDataString;
         return;
     }
     
@@ -288,7 +289,7 @@ typedef enum : NSUInteger {
     
     switch (refreshState) {
         case HMRefreshStateNormal: {
-            self.pulldownView.tipLabel.text = @"下拉刷新数据";
+            self.pulldownView.tipLabel.text = self.normalString;
             
             [UIView animateWithDuration:0.25 animations:^{
                 self.pulldownView.pulldownIcon.transform = CGAffineTransformIdentity;
@@ -296,7 +297,7 @@ typedef enum : NSUInteger {
         }
             break;
         case HMRefreshStatePulling: {
-            self.pulldownView.tipLabel.text = @"放开开始刷新";
+            self.pulldownView.tipLabel.text = self.pullingString;
             
             [UIView animateWithDuration:0.25 animations:^{
                 self.pulldownView.pulldownIcon.transform = CGAffineTransformMakeRotation(M_PI);
@@ -305,8 +306,8 @@ typedef enum : NSUInteger {
             break;
         case HMRefreshStateRefreshing:
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.pulldownView.tipLabel.text = @"正在刷新数据...";
-                
+                self.pulldownView.tipLabel.text = self.refreshingString;
+                [self.pulldownView startAnimating];
                 self.pulldownView.pulldownIcon.hidden = YES;
                 
                 if (!_isRefreshing) {
@@ -349,6 +350,8 @@ typedef enum : NSUInteger {
     if (self.pulldownView == nil) {
         self.pulldownView = [[HMRefreshView alloc] init];
     }
+    self.pulldownView.tipLabel.text = self.normalString;
+    self.pulldownView.pulldownIcon.hidden = YES;
     [_contentView addSubview:self.pulldownView];
     
     // 4. 上拉刷新视图
@@ -396,6 +399,49 @@ typedef enum : NSUInteger {
     rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
     
     self.pullupView.frame = rect;
+}
+
+#pragma mark - 提示文字
+- (NSString *)normalString {
+    if (_normalString == nil) {
+        _normalString = @"下拉刷新数据";
+    }
+    return _normalString;
+}
+
+- (NSString *)pullingString {
+    if (_pullingString == nil) {
+        _pullingString = @"放开开始刷新";
+    }
+    return _pullingString;
+}
+
+- (NSString *)refreshingString {
+    if (_refreshingString == nil) {
+        _refreshingString = @"正在刷新数据...";
+    }
+    return _refreshingString;
+}
+
+- (NSString *)noDataString {
+    if (_noDataString == nil) {
+        _noDataString = @"没有新数据";
+    }
+    return _noDataString;
+}
+
+- (NSString *)lastRefreshString {
+    if (_lastRefreshString == nil) {
+        _lastRefreshString = @"上次刷新 ";
+    }
+    return _lastRefreshString;
+}
+
+- (NSString *)donotPullupString {
+    if (_donotPullupString == nil) {
+        _donotPullupString = @"没有新数据，不再刷新";
+    }
+    return _donotPullupString;
 }
 
 @end
