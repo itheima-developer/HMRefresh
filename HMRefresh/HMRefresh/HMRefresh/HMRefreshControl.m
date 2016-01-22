@@ -8,6 +8,7 @@
 
 #import "HMRefreshControl.h"
 #import "HMRefreshView.h"
+#import <objc/message.h>
 
 /// 刷新控件偏移量
 #define HMRefreshControlOffset -60
@@ -208,16 +209,16 @@ typedef enum : NSUInteger {
 /// 检查上拉刷新
 - (void)checkPullup {
     
-    // TODO: - 暂时仅处理 tableView
-    if (![self.scrollView isKindOfClass:[UITableView class]]) {
+    if (!([self.scrollView isKindOfClass:[UITableView class]] || [self.scrollView isKindOfClass:[UICollectionView class]])) {
         return;
     }
     
+    //    NSLog(@"%zd - %zd", _retryTimes, _pullupRetryTimes);
     if (_retryTimes >= self.pullupRetryTimes) {
         return;
     }
     
-    UITableView *parentView = (UITableView *)self.scrollView;
+    UIScrollView *parentView = self.scrollView;
     
     _prePullupIndexPath = [self lastIndexPath];
     if (_prePullupIndexPath == nil) {
@@ -225,7 +226,14 @@ typedef enum : NSUInteger {
         return;
     }
     
-    UITableViewCell *cell = [parentView cellForRowAtIndexPath:_prePullupIndexPath];
+    SEL numberSel;
+    if ([parentView isKindOfClass:[UITableView class]]) {
+        numberSel = @selector(cellForRowAtIndexPath:);
+    } else {
+        numberSel = @selector(cellForItemAtIndexPath:);
+    }
+    
+    id cell = ((id (*)(id, SEL, NSIndexPath *))objc_msgSend)(parentView, numberSel, _prePullupIndexPath);
     
     if (cell == nil) {
         return;
@@ -241,20 +249,26 @@ typedef enum : NSUInteger {
 
 - (NSIndexPath *)lastIndexPath {
     
-    if (![self.scrollView isKindOfClass:[UITableView class]]) {
+    if (!([self.scrollView isKindOfClass:[UITableView class]] || [self.scrollView isKindOfClass:[UICollectionView class]])) {
         return nil;
     }
     
-    UITableView *parentView = (UITableView *)self.scrollView;
+    UIScrollView *parentView = self.scrollView;
     
-    NSInteger section = [parentView numberOfSections];
+    NSInteger section = ((NSInteger (*)(id, SEL))objc_msgSend)(parentView, @selector(numberOfSections));
     if (section <= 0) {
         return nil;
     }
     
     NSInteger row;
+    SEL numberSel;
+    if ([parentView isKindOfClass:[UITableView class]]) {
+        numberSel = @selector(numberOfRowsInSection:);
+    } else {
+        numberSel = @selector(numberOfItemsInSection:);
+    }
     do {
-        row = [parentView numberOfRowsInSection:(--section)];
+        row = ((NSInteger (*)(id, SEL, NSInteger))objc_msgSend)(parentView, numberSel, --section);
     } while (row <= 0 && section > 0);
     
     if (row <= 0) {

@@ -18,6 +18,8 @@
 		C2456DF01C51B8A000A793A4 /* HMRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2456DED1C51B8A000A793A4 /* HMRefresh.bundle */; };
 		C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */; };
 		C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DF31C51BC8500A793A4 /* HMRefreshControl.m */; };
+		C25056141C51EF8700EC7C67 /* SimpleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056131C51EF8700EC7C67 /* SimpleCollectionViewController.m */; };
+		C25056171C51F91300EC7C67 /* DemoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,10 @@
 		C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshView.m; sourceTree = "<group>"; };
 		C2456DF21C51BC8500A793A4 /* HMRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRefreshControl.h; sourceTree = "<group>"; };
 		C2456DF31C51BC8500A793A4 /* HMRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshControl.m; sourceTree = "<group>"; };
+		C25056121C51EF8700EC7C67 /* SimpleCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleCollectionViewController.h; sourceTree = "<group>"; };
+		C25056131C51EF8700EC7C67 /* SimpleCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleCollectionViewController.m; sourceTree = "<group>"; };
+		C25056151C51F91300EC7C67 /* DemoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCollectionViewCell.h; sourceTree = "<group>"; };
+		C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +130,10 @@
 				C2456DE41C50DA4000A793A4 /* DemoControllers.h */,
 				C2456DE11C50DA1C00A793A4 /* SimpleTableViewController.h */,
 				C2456DE21C50DA1C00A793A4 /* SimpleTableViewController.m */,
+				C25056121C51EF8700EC7C67 /* SimpleCollectionViewController.h */,
+				C25056131C51EF8700EC7C67 /* SimpleCollectionViewController.m */,
+				C25056151C51F91300EC7C67 /* DemoCollectionViewCell.h */,
+				C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -199,11 +209,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C25056141C51EF8700EC7C67 /* SimpleCollectionViewController.m in Sources */,
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
 				C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */,
 				C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
 				C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */,
+				C25056171C51F91300EC7C67 /* DemoCollectionViewCell.m in Sources */,
 				C2456DC61C50CF0900A793A4 /* AppDelegate.m in Sources */,
 				C2456DC31C50CF0900A793A4 /* main.m in Sources */,
 			);

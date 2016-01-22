@@ -22,6 +22,10 @@
                              @{@"groupName": @"表格演练",
                                @"controllers":
                                    @[@{@"name": @"简单表格演练", @"clsName": @"SimpleTableViewController"}]
+                               },
+                             @{@"groupName": @"CollectionView演练",
+                               @"controllers":
+                                   @[@{@"name": @"简单CollectionView演练", @"clsName": @"SimpleCollectionViewController"}]
                                }
                              ];
     }
