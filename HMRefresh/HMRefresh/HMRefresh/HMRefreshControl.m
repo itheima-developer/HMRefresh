@@ -11,6 +11,8 @@
 
 /// 刷新控件偏移量
 #define HMRefreshControlOffset -60
+/// 末次刷新日期 Key
+NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefreshDateKey";
 
 /// 刷新状态枚举
 /// - HMRefreshStateNormal:       默认状态或者松开手就回到默认状态
@@ -35,6 +37,8 @@ typedef enum : NSUInteger {
     CGFloat _preOffsetY;
     NSIndexPath *_prePullupIndexPath;
     NSInteger _retryTimes;
+    NSDateFormatter *_dateFormatter;
+    NSCalendar *_calendar;
 }
 
 #pragma mark - 构造函数
@@ -42,6 +46,10 @@ typedef enum : NSUInteger {
     self = [super init];
     if (self) {
         _pullupRetryTimes = 3;
+        
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"zh-CN"];
+        _calendar = [NSCalendar currentCalendar];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self prepareUI];
@@ -63,6 +71,38 @@ typedef enum : NSUInteger {
     CGFloat x = _contentView.bounds.size.width * 0.5;
     CGFloat y = (self.bounds.size.height - self.pulldownView.bounds.size.height * 0.5);
     self.pulldownView.center = CGPointMake(x, y);
+}
+
+- (NSString *)refreshDateString {
+    
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:HMRefreshControlLastRefreshDateKey];
+    if (date == nil) {
+        return @"上次刷新 无";
+    }
+    
+    NSString *fmt = @" HH:mm";
+    
+    if ([_calendar isDateInToday:date]) {
+        fmt = [@"上次刷新 今天" stringByAppendingString:fmt];
+    } else if ([_calendar isDateInYesterday:date]) {
+        fmt = [@"上次刷新 昨天" stringByAppendingString:fmt];
+    } else {
+        fmt = [@"上次刷新 yyyy-MM-dd " stringByAppendingString:fmt];
+    }
+    _dateFormatter.dateFormat = fmt;
+    
+    return [_dateFormatter stringFromDate:date];
+}
+
+- (void)showRefreshDate:(NSDate *)date {
+    if (date != nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:date forKey:HMRefreshControlLastRefreshDateKey];
+    }
+    
+    NSString *dateStr = [self refreshDateString];
+    
+    self.pulldownView.timeLabel.text = dateStr;
+    self.pullupView.timeLabel.text = dateStr;
 }
 
 #pragma mark - 父类方法及属性
@@ -89,6 +129,7 @@ typedef enum : NSUInteger {
 - (void)endRefreshing {
     NSLog(@"结束刷新");
     [super endRefreshing];
+    [self showRefreshDate:[NSDate date]];
     
     _isRefreshing = NO;
     
@@ -172,7 +213,7 @@ typedef enum : NSUInteger {
         return;
     }
     
-    if (_retryTimes == self.pullupRetryTimes) {
+    if (_retryTimes >= self.pullupRetryTimes) {
         return;
     }
     
@@ -302,7 +343,6 @@ typedef enum : NSUInteger {
     // 2> 添加刷新视图
     if (self.pullupView == nil) {
         self.pullupView = [[HMRefreshView alloc] init];
-        self.pullupView.backgroundColor = [UIColor greenColor];
     }
     [scrollView addSubview:self.pullupView];
     
@@ -312,6 +352,9 @@ typedef enum : NSUInteger {
     scrollView.contentInset = inset;
     
     [self setPullupViewLocation];
+    
+    // 5. 显示刷新时间
+    [self showRefreshDate:nil];
 }
 
 /// 设置上拉视图位置
@@ -332,7 +375,6 @@ typedef enum : NSUInteger {
     rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
     
     self.pullupView.frame = rect;
-    self.pullupView.backgroundColor = [UIColor greenColor];
 }
 
 @end
