@@ -105,13 +105,17 @@ $ pod update
 @end
 ```
 
-* 代码连线到私有扩展中，注意删除 `weak` 修饰符
+* 代码连线到私有扩展中
 
 ```objc
-@property (nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
-@property (nonatomic) IBOutlet UILabel *tipLabel;
-@property (nonatomic) IBOutlet UIImageView *pulldownIcon;
-@property (nonatomic) IBOutlet UILabel *timeLabel;
+/// 刷新指示器
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *refreshIndicator;
+/// 下拉提示图像
+@property (nonatomic, weak) IBOutlet UIImageView *pulldownIcon;
+/// 提示标签
+@property (nonatomic, weak) IBOutlet UILabel *tipLabel;
+/// 刷新时间标签
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
 ```
 
 * 实现以下三个方法
