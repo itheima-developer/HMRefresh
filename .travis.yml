@@ -2,6 +2,4 @@ language: objective-c
 xcode-project: HMRefresh/HMRefresh.xcodeproj
 xcode_scheme: HMRefresh
 after_success:
-  - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
-     bash <(curl -s https://codecov.io/bash);
-    fi
+- bash <(curl -s https://codecov.io/bash)
