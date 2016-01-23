@@ -9,7 +9,36 @@
 #import <UIKit/UIKit.h>
 @class HMRefreshView;
 
-/// 刷新控件
+/**
+ 刷新控件 - HMRefreshControl
+ 
+ 示例代码：
+ 
+ 1. 在 UITableViewController 中实例化刷新控件
+ 
+ @code
+ self.refreshControl = [[HMRefreshControl alloc] init];
+ [self.refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+ @endcode
+ 
+ 2. 在 loadData: 方法中设置刷新控件状态
+ 
+ @code
+ // 开始刷新
+ [refreshControl beginRefreshing];
+ 
+ // 发起网络请求，异步加载数据
+ [self.dataModal loadData:refreshControl.isPullupRefresh completion:^{
+     // 结束刷新
+     [refreshControl endRefreshing];
+     
+     // 刷新数据
+     [self.tableView reloadData];
+ }];
+ @endcode
+ 
+ @remark 注意 `网络请求` 方法中要根据 `isPullupRefresh` 参数决定如何加载数据，具体代码可以参照 `DataModel` 中的示例代码
+ */
 @interface HMRefreshControl : UIRefreshControl
 /// 下拉刷新视图
 @property (nonatomic) HMRefreshView *pulldownView;

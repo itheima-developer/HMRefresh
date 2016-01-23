@@ -9,10 +9,14 @@
 #import "DemoRefreshView.h"
 
 @interface DemoRefreshView()
-@property (nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
-@property (nonatomic) IBOutlet UILabel *tipLabel;
-@property (nonatomic) IBOutlet UIImageView *pulldownIcon;
-@property (nonatomic) IBOutlet UILabel *timeLabel;
+/// 刷新指示器
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *refreshIndicator;
+/// 下拉提示图像
+@property (nonatomic, weak) IBOutlet UIImageView *pulldownIcon;
+/// 提示标签
+@property (nonatomic, weak) IBOutlet UILabel *tipLabel;
+/// 刷新时间标签
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
 @end
 
 @implementation DemoRefreshView

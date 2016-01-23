@@ -27,11 +27,6 @@
     self = [super initWithFrame:CGRectMake(0, 0, 220, 44)];
     if (self) {
         [self addSubview:self.containerView];
-        
-        [self.containerView addSubview:self.pulldownIcon];
-        [self.containerView addSubview:self.refreshIndicator];
-        [self.containerView addSubview:self.tipLabel];
-        [self.containerView addSubview:self.timeLabel];
     }
     return self;
 }
@@ -55,31 +50,40 @@
 
 - (UIActivityIndicatorView *)refreshIndicator {
     if (_refreshIndicator == nil) {
-        _refreshIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         
-        self.refreshIndicator.frame = CGRectMake(0, 6, 32, 32);
+        indicator.frame = CGRectMake(0, 6, 32, 32);
+        
+        [self.containerView addSubview:indicator];
+        _refreshIndicator = indicator;
     }
     return _refreshIndicator;
 }
 
 - (UILabel *)tipLabel {
     if (_tipLabel == nil) {
-        _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 8, 172, 16)];
+        UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 8, 172, 16)];
         
-        _tipLabel.font = [UIFont systemFontOfSize:13];
-        _tipLabel.textColor = [UIColor darkGrayColor];
-        _tipLabel.text = @"正在刷新数据...";
+        tipLabel.font = [UIFont systemFontOfSize:13];
+        tipLabel.textColor = [UIColor darkGrayColor];
+        tipLabel.text = @"正在刷新数据...";
+        
+        [self.containerView addSubview:tipLabel];
+        _tipLabel = tipLabel;
     }
     return _tipLabel;
 }
 
 - (UILabel *)timeLabel {
     if (_timeLabel == nil) {
-        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 24, 172, 12)];
+        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 24, 172, 12)];
         
-        _timeLabel.font = [UIFont systemFontOfSize:10];
-        _timeLabel.textColor = [UIColor grayColor];
-        _timeLabel.text = @"上次刷新 2016-01-01 24:59";
+        timeLabel.font = [UIFont systemFontOfSize:10];
+        timeLabel.textColor = [UIColor grayColor];
+        timeLabel.text = @"上次刷新 2016-01-01 24:59";
+        
+        [self.containerView addSubview:timeLabel];
+        _timeLabel = timeLabel;
     }
     return _timeLabel;
 }
@@ -88,9 +92,12 @@
     if (_pulldownIcon == nil) {
         UIImage *arrowimage = [UIImage imageNamed:@"tableview_pull_refresh" inBundle:self.imageBundle compatibleWithTraitCollection:nil];
         
-        _pulldownIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 6, 32, 32)];
-        _pulldownIcon.image = arrowimage;
-        _pulldownIcon.hidden = YES;
+        UIImageView *pulldownIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 6, 32, 32)];
+        pulldownIcon.image = arrowimage;
+        pulldownIcon.hidden = YES;
+        
+        [self.containerView addSubview:pulldownIcon];
+        _pulldownIcon = pulldownIcon;
     }
     return _pulldownIcon;
 }
