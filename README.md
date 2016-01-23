@@ -1,6 +1,6 @@
 ![](http://www.itheima.com/uploads/2015/08/198x57.png)
 
-# HMRefresh
+# HMRefresh [![Build Status](https://travis-ci.org/itheima-developer/HMRefresh.svg?branch=master)](https://travis-ci.org/itheima-developer/HMRefresh)
 
 轻量级的上拉／下拉刷新控件
 
