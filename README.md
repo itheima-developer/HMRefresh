@@ -1,6 +1,9 @@
 ![](http://www.itheima.com/uploads/2015/08/198x57.png)
 
-# HMRefresh [![Build Status](https://travis-ci.org/itheima-developer/HMRefresh.svg?branch=master)](https://travis-ci.org/itheima-developer/HMRefresh)
+# HMRefresh 
+[![Build Status](https://travis-ci.org/itheima-developer/HMRefresh.svg?branch=master)](https://travis-ci.org/itheima-developer/HMRefresh)
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/HMRefresh.svg)](https://img.shields.io/cocoapods/v/HMRefresh.svg)
+[![Platform](https://img.shields.io/cocoapods/p/HMRefresh.svg?style=flat)](http://cocoadocs.org/docsets/HMRefresh)
 
 轻量级的上拉／下拉刷新控件
 
