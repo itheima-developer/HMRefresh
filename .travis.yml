@@ -1,4 +1,8 @@
 language: objective-c
 xcode-project: HMRefresh/HMRefresh.xcodeproj
 xcode_scheme: HMRefresh
+before_install:
+  - pip install codecov
+after_success:
+  - codecov
 
