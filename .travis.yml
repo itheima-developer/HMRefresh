@@ -1,0 +1,4 @@
+language: objective-c
+xcode-project: HMRefresh/HMRefresh.xcodeproj
+xcode_scheme: HMRefresh
+
