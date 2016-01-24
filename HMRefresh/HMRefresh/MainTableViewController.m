@@ -22,7 +22,8 @@
                              @{@"groupName": @"表格演练",
                                @"controllers":
                                    @[@{@"name": @"简单表格演练", @"clsName": @"SimpleTableViewController"},
-                                     @{@"name": @"自定义表格演练", @"clsName": @"CustomTableViewController"},]
+                                     @{@"name": @"自定义表格演练", @"clsName": @"CustomTableViewController"},
+                                     @{@"name": @"仿百度外卖", @"clsName": @"BaiduWMTableViewController"}]
                                },
                              @{@"groupName": @"CollectionView演练",
                                @"controllers":

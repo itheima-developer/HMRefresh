@@ -8,4 +8,5 @@
 
 #import "SimpleTableViewController.h"
 #import "CustomTableViewController.h"
+#import "BaiduWMTableViewController.h"
 #import "SimpleCollectionViewController.h"

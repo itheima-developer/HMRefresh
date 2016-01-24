@@ -21,6 +21,9 @@
 		C25056141C51EF8700EC7C67 /* SimpleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056131C51EF8700EC7C67 /* SimpleCollectionViewController.m */; };
 		C25056171C51F91300EC7C67 /* DemoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */; };
 		C250561A1C520A0E00EC7C67 /* CustomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056191C520A0E00EC7C67 /* CustomTableViewController.m */; };
+		C2B8DB041C557012006AD0A1 /* BaiduWMTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B8DB031C557012006AD0A1 /* BaiduWMTableViewController.m */; };
+		C2B8DB081C557136006AD0A1 /* BaiduWMRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B8DB071C557136006AD0A1 /* BaiduWMRefreshView.m */; };
+		C2B8DB0A1C557283006AD0A1 /* BaiduWMRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2B8DB091C557283006AD0A1 /* BaiduWMRefreshView.xib */; };
 		C2EB654A1C520B480040A4B4 /* DemoRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2EB65491C520B480040A4B4 /* DemoRefreshView.m */; };
 		C2EB654C1C520B680040A4B4 /* DemoRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2EB654B1C520B680040A4B4 /* DemoRefreshView.xib */; };
 /* End PBXBuildFile section */
@@ -52,6 +55,11 @@
 		C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoCollectionViewCell.m; sourceTree = "<group>"; };
 		C25056181C520A0E00EC7C67 /* CustomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewController.h; sourceTree = "<group>"; };
 		C25056191C520A0E00EC7C67 /* CustomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewController.m; sourceTree = "<group>"; };
+		C2B8DB021C557012006AD0A1 /* BaiduWMTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduWMTableViewController.h; sourceTree = "<group>"; };
+		C2B8DB031C557012006AD0A1 /* BaiduWMTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduWMTableViewController.m; sourceTree = "<group>"; };
+		C2B8DB061C557136006AD0A1 /* BaiduWMRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduWMRefreshView.h; sourceTree = "<group>"; };
+		C2B8DB071C557136006AD0A1 /* BaiduWMRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduWMRefreshView.m; sourceTree = "<group>"; };
+		C2B8DB091C557283006AD0A1 /* BaiduWMRefreshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BaiduWMRefreshView.xib; sourceTree = "<group>"; };
 		C2EB65481C520B480040A4B4 /* DemoRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRefreshView.h; sourceTree = "<group>"; };
 		C2EB65491C520B480040A4B4 /* DemoRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoRefreshView.m; sourceTree = "<group>"; };
 		C2EB654B1C520B680040A4B4 /* DemoRefreshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoRefreshView.xib; sourceTree = "<group>"; };
@@ -170,9 +178,22 @@
 				C2456DE41C50DA4000A793A4 /* DemoControllers.h */,
 				C22ECCB31C520F0400435F16 /* 简单表格 */,
 				C22ECCB41C520F1000435F16 /* 自定义刷新视图 */,
+				C2B8DB051C557018006AD0A1 /* 仿百度外卖 */,
 				C22ECCB51C520F1A00435F16 /* 简单CollectionView */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		C2B8DB051C557018006AD0A1 /* 仿百度外卖 */ = {
+			isa = PBXGroup;
+			children = (
+				C2B8DB021C557012006AD0A1 /* BaiduWMTableViewController.h */,
+				C2B8DB031C557012006AD0A1 /* BaiduWMTableViewController.m */,
+				C2B8DB061C557136006AD0A1 /* BaiduWMRefreshView.h */,
+				C2B8DB071C557136006AD0A1 /* BaiduWMRefreshView.m */,
+				C2B8DB091C557283006AD0A1 /* BaiduWMRefreshView.xib */,
+			);
+			name = "仿百度外卖";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +257,7 @@
 				C2456DD11C50CF0900A793A4 /* LaunchScreen.storyboard in Resources */,
 				C2456DCE1C50CF0900A793A4 /* Assets.xcassets in Resources */,
 				C2EB654C1C520B680040A4B4 /* DemoRefreshView.xib in Resources */,
+				C2B8DB0A1C557283006AD0A1 /* BaiduWMRefreshView.xib in Resources */,
 				C2456DCC1C50CF0900A793A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,8 +270,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C25056141C51EF8700EC7C67 /* SimpleCollectionViewController.m in Sources */,
+				C2B8DB081C557136006AD0A1 /* BaiduWMRefreshView.m in Sources */,
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
 				C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */,
+				C2B8DB041C557012006AD0A1 /* BaiduWMTableViewController.m in Sources */,
 				C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
 				C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */,

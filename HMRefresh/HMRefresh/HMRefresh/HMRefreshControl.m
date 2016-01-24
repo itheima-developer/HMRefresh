@@ -142,6 +142,10 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
             [self setPullupViewLocation];
             
             _isPullupRefresh = NO;
+            
+            if ([self.pullupView respondsToSelector:@selector(refreshViewDidEndRefreshed:)]) {
+                [self.pullupView refreshViewDidEndRefreshed:self.pullupView];
+            }
         });
         return;
     }
@@ -153,6 +157,10 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         [self setPullupViewLocation];
         
         _isRefreshing = NO;
+        
+        if ([self.pulldownView respondsToSelector:@selector(refreshViewDidEndRefreshed:)]) {
+            [self.pulldownView refreshViewDidEndRefreshed:self.pulldownView];
+        }
     });
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

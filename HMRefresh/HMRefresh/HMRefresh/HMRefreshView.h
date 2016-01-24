@@ -75,6 +75,11 @@ typedef enum : NSUInteger {
 /// @param refreshType 刷新类型(上拉/下拉)
 - (void)refreshViewDidRefreshing:(UIView <HMRefreshViewDelegate> *)refreshView refreshType:(HMRefreshType)refreshType;
 
+/// 刷新视图完成刷新
+///
+/// @param refreshView 刷新视图
+- (void)refreshViewDidEndRefreshed:(UIView<HMRefreshViewDelegate> *)refreshView;
+
 @end
 
 @interface HMRefreshView : UIView <HMRefreshViewDelegate>
