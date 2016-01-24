@@ -118,25 +118,7 @@ $ pod update
 @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
 ```
 
-* 实现以下三个方法
-
-```objc
-@implementation DemoRefreshView
-
-- (void)startAnimating {
-    [self.refreshIndicator startAnimating];
-}
-
-- (void)stopAnimating {
-    [self.refreshIndicator stopAnimating];
-}
-
-- (BOOL)isAnimating {
-    return self.refreshIndicator.isAnimating;
-}
-
-@end
-```
+> 提示：如果不需要可以不连线，不过属性仍然需要保留
 
 ### Swift
 
