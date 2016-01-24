@@ -353,6 +353,8 @@ typedef enum : NSUInteger {
     }
     self.pulldownView.tipLabel.text = self.normalString;
     self.pulldownView.pulldownIcon.hidden = NO;
+    self.pulldownView.refreshIndicator.hidesWhenStopped = YES;
+    
     [_contentView addSubview:self.pulldownView];
     
     // 4. 上拉刷新视图
