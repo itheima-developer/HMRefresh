@@ -21,16 +21,4 @@
 
 @implementation DemoRefreshView
 
-- (void)startAnimating {
-    [self.refreshIndicator startAnimating];
-}
-
-- (void)stopAnimating {
-    [self.refreshIndicator stopAnimating];
-}
-
-- (BOOL)isAnimating {
-    return self.refreshIndicator.isAnimating;
-}
-
 @end

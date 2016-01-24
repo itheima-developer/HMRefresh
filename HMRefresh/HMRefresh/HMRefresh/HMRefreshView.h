@@ -31,22 +31,6 @@
  /// 刷新时间标签
  @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
  @endcode
- 
- 3. 实现协议方法
- 
- @code
- - (void)startAnimating {
-     [self.refreshIndicator startAnimating];
- }
- 
- - (void)stopAnimating {
-     [self.refreshIndicator stopAnimating];
- }
- 
- - (BOOL)isAnimating {
-     return self.refreshIndicator.isAnimating;
- }
- @endcode
  */
 @protocol HMRefreshViewDelegate <NSObject>
 
@@ -58,13 +42,6 @@
 @property (nonatomic, weak, readonly) UILabel *tipLabel;
 /// 刷新时间标签
 @property (nonatomic, weak, readonly) UILabel *timeLabel;
-
-/// 开始动画
-- (void)startAnimating;
-/// 停止动画
-- (void)stopAnimating;
-/// 是否正在动画
-- (BOOL)isAnimating;
 
 @end
 

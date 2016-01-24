@@ -36,18 +36,6 @@
 }
 
 #pragma mark - HMRefreshViewDelegate
-- (void)startAnimating {
-    [self.refreshIndicator startAnimating];
-}
-
-- (void)stopAnimating {
-    [self.refreshIndicator stopAnimating];
-}
-
-- (BOOL)isAnimating {
-    return self.refreshIndicator.isAnimating;
-}
-
 - (UIActivityIndicatorView *)refreshIndicator {
     if (_refreshIndicator == nil) {
         UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

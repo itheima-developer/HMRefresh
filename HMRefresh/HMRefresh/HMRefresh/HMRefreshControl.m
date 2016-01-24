@@ -135,7 +135,7 @@ typedef enum : NSUInteger {
     [self showRefreshDate:[NSDate date]];
     
     if (_isPullupRefresh) {
-        [self.pullupView stopAnimating];
+        [self stopAnimating:self.pullupView];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -246,9 +246,9 @@ typedef enum : NSUInteger {
         return;
     }
     
-    if (!self.pullupView.isAnimating) {
+    if (![self isAnimating:self.pullupView]) {
         _isPullupRefresh = YES;
-        [self.pullupView startAnimating];
+        [self startAnimating:self.pullupView];
         
         [self sendAction:__action to:__target forEvent:[[UIEvent alloc] init]];
     }
@@ -308,7 +308,7 @@ typedef enum : NSUInteger {
         case HMRefreshStateRefreshing:
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.pulldownView.tipLabel.text = self.refreshingString;
-                [self.pulldownView startAnimating];
+                [self startAnimating:self.pulldownView];
                 self.pulldownView.pulldownIcon.hidden = YES;
                 
                 if (!_isRefreshing) {
@@ -319,6 +319,19 @@ typedef enum : NSUInteger {
             
             break;
     }
+}
+
+#pragma mark - 刷新视图方法
+- (void)startAnimating:(UIView <HMRefreshViewDelegate> *)refreshView {
+    [refreshView.refreshIndicator startAnimating];
+}
+
+- (void)stopAnimating:(UIView <HMRefreshViewDelegate> *)refreshView {
+    [refreshView.refreshIndicator stopAnimating];
+}
+
+- (BOOL)isAnimating:(UIView <HMRefreshViewDelegate> *)refreshView {
+    return refreshView.refreshIndicator.isAnimating;
 }
 
 #pragma mark - 设置界面
