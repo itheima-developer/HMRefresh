@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+/// 刷新状态枚举
+/// - HMRefreshStateNormal:       默认状态或者松开手就回到默认状态
+/// - HMRefreshStatePulling:      将要刷新 - 松开手就进入刷新的状态
+/// - HMRefreshStateRefreshing:   正在刷新
+typedef enum : NSUInteger {
+    HMRefreshStateNormal,
+    HMRefreshStatePulling,
+    HMRefreshStateRefreshing,
+} HMRefreshState;
+
+/// 刷新类型枚举
+/// - HMRefreshTypePulldown:      下拉刷新
+/// - HMRefreshTypePullup:        上拉刷新
+typedef enum : NSUInteger {
+    HMRefreshTypePulldown,
+    HMRefreshTypePullup
+} HMRefreshType;
+
 /**
  刷新视图协议 - 自定义刷新视图需要遵守此协议
  
@@ -42,6 +60,20 @@
 @property (nonatomic, weak, readonly) UILabel *tipLabel;
 /// 刷新时间标签
 @property (nonatomic, weak, readonly) UILabel *timeLabel;
+
+@optional
+/// 下拉刷新视图正在被拖拽
+///
+/// @param refreshView 下拉刷新视图
+/// @param offsetY     Y 方向偏移量，用于自定义动画
+/// @param state       刷新视图状态(HMRefreshStateNormal/HMRefreshStatePulling)
+- (void)refreshView:(UIView <HMRefreshViewDelegate> *)refreshView beginDraggingOffsetY:(CGFloat)offsetY state:(HMRefreshState)state;
+
+/// 刷新视图正在刷新
+///
+/// @param refreshView 刷新视图
+/// @param refreshType 刷新类型(上拉/下拉)
+- (void)refreshViewDidRefreshing:(UIView <HMRefreshViewDelegate> *)refreshView refreshType:(HMRefreshType)refreshType;
 
 @end
 

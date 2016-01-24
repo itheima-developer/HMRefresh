@@ -15,16 +15,6 @@
 /// 末次刷新日期 Key
 NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefreshDateKey";
 
-/// 刷新状态枚举
-/// - HMRefreshStateNormal:       默认状态或者松开手就回到默认状态
-/// - HMRefreshStatePulling:      将要刷新 - 松开手就进入刷新的状态
-/// - HMRefreshStateRefreshing:   正在刷新
-typedef enum : NSUInteger {
-    HMRefreshStateNormal,
-    HMRefreshStatePulling,
-    HMRefreshStateRefreshing,
-} HMRefreshState;
-
 @interface HMRefreshControl()
 @property (nonatomic) HMRefreshState refreshState;
 @end
@@ -126,6 +116,10 @@ typedef enum : NSUInteger {
         self.refreshState = HMRefreshStateRefreshing;
     } else {
         self.pullupView.tipLabel.text = self.refreshingString;
+        
+        if ([self.pullupView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
+            [self.pullupView refreshViewDidRefreshing:self.pullupView refreshType:HMRefreshTypePullup];
+        }
     }
 }
 
@@ -197,6 +191,9 @@ typedef enum : NSUInteger {
             self.refreshState = HMRefreshStatePulling;
         } else if (self.refreshState == HMRefreshStatePulling && self.frame.origin.y > HMRefreshControlOffset) {
             self.refreshState = HMRefreshStateNormal;
+        }
+        if ([self.pulldownView respondsToSelector:@selector(refreshView:beginDraggingOffsetY:state:)]) {
+            [self.pulldownView refreshView:self.pulldownView beginDraggingOffsetY:self.frame.origin.y state:self.refreshState];
         }
     } else {
         if (self.refreshState == HMRefreshStatePulling) {
@@ -310,6 +307,10 @@ typedef enum : NSUInteger {
                 self.pulldownView.tipLabel.text = self.refreshingString;
                 [self startAnimating:self.pulldownView];
                 self.pulldownView.pulldownIcon.hidden = YES;
+                
+                if ([self.pulldownView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
+                    [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:HMRefreshTypePulldown];
+                }
                 
                 if (!_isRefreshing) {
                     _isRefreshing = YES;

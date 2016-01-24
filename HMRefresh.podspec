@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "HMRefresh"
-  s.version      = "1.0.4"
+  s.version      = "1.0.6"
   s.summary      = "轻量级的上拉／下拉刷新控件"
   s.homepage     = "https://github.com/itheima-developer/HMRefresh"
   s.license      = "MIT"
