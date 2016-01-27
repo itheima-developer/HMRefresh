@@ -11,7 +11,6 @@
 		C2456DC61C50CF0900A793A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DC51C50CF0900A793A4 /* AppDelegate.m */; };
 		C2456DCC1C50CF0900A793A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2456DCA1C50CF0900A793A4 /* Main.storyboard */; };
 		C2456DCE1C50CF0900A793A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2456DCD1C50CF0900A793A4 /* Assets.xcassets */; };
-		C2456DD11C50CF0900A793A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2456DCF1C50CF0900A793A4 /* LaunchScreen.storyboard */; };
 		C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DDB1C50D8E000A793A4 /* DataModel.m */; };
 		C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DDE1C50D94E00A793A4 /* MainTableViewController.m */; };
 		C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2456DE21C50DA1C00A793A4 /* SimpleTableViewController.m */; };
@@ -35,7 +34,6 @@
 		C2456DC51C50CF0900A793A4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C2456DCB1C50CF0900A793A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C2456DCD1C50CF0900A793A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C2456DD01C50CF0900A793A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C2456DD21C50CF0900A793A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2456DDA1C50D8E000A793A4 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
 		C2456DDB1C50D8E000A793A4 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 				C2456DDE1C50D94E00A793A4 /* MainTableViewController.m */,
 				C2456DCA1C50CF0900A793A4 /* Main.storyboard */,
 				C2456DCD1C50CF0900A793A4 /* Assets.xcassets */,
-				C2456DCF1C50CF0900A793A4 /* LaunchScreen.storyboard */,
 				C2456DD21C50CF0900A793A4 /* Info.plist */,
 				C2456DC11C50CF0900A793A4 /* Supporting Files */,
 			);
@@ -254,7 +251,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2456DF01C51B8A000A793A4 /* HMRefresh.bundle in Resources */,
-				C2456DD11C50CF0900A793A4 /* LaunchScreen.storyboard in Resources */,
 				C2456DCE1C50CF0900A793A4 /* Assets.xcassets in Resources */,
 				C2EB654C1C520B680040A4B4 /* DemoRefreshView.xib in Resources */,
 				C2B8DB0A1C557283006AD0A1 /* BaiduWMRefreshView.xib in Resources */,
@@ -294,14 +290,6 @@
 				C2456DCB1C50CF0900A793A4 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C2456DCF1C50CF0900A793A4 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C2456DD01C50CF0900A793A4 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -393,11 +381,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = HMRefresh/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itheima.HMRefresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -405,11 +395,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = HMRefresh/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itheima.HMRefresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

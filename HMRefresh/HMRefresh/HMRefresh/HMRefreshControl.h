@@ -17,8 +17,12 @@
  1. 在 UITableViewController 中实例化刷新控件
  
  @code
- self.refreshControl = [[HMRefreshControl alloc] init];
- [self.refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+ // 实例化刷新控件
+ HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
+ // 添加监听方法
+ [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+ // 添加到表格
+ [self.tableView addSubview:refreshControl];
  @endcode
  
  2. 在 loadData: 方法中设置刷新控件状态

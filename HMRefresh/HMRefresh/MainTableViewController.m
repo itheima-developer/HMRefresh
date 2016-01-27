@@ -73,7 +73,7 @@
     
     vc.title = controllerDict[@"name"];
     
-    [self showViewController:vc sender:self];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSDictionary *)controllerDictWithIndexPath:(NSIndexPath *)indexPath {

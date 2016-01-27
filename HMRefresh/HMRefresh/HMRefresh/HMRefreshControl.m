@@ -60,8 +60,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // 设置上拉视图位置
     [self setPullupViewLocation];
-    // 显示刷新时间
-    [self showRefreshDate:nil];
 }
 
 /// 设置上拉视图位置
@@ -105,16 +103,22 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (NSString *)refreshDateString {
     
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:HMRefreshControlLastRefreshDateKey];
+    
     if (date == nil) {
         return [self.lastRefreshString stringByAppendingString:@"无"];
     }
     
-    NSString *fmt = @" HH:mm";
+    NSCalendarUnit unitFlags = NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents *todayComponents = [_calendar components:unitFlags fromDate:[NSDate date]];
+    NSDateComponents *dateComponents = [_calendar components:unitFlags fromDate:date];
     
-    if ([_calendar isDateInToday:date]) {
-        fmt = [@"今天 " stringByAppendingString:fmt];
-    } else if ([_calendar isDateInYesterday:date]) {
-        fmt = [@"昨天 " stringByAppendingString:fmt];
+    NSString *fmt = @" HH:mm";
+    if (todayComponents.year == dateComponents.year) {
+        if (todayComponents.month == dateComponents.month && todayComponents.day == dateComponents.day) {
+            fmt = [@"今天 " stringByAppendingString:fmt];
+        } else {
+            fmt = [@"MM-dd " stringByAppendingString:fmt];
+        }
     } else {
         fmt = [@"yyyy-MM-dd " stringByAppendingString:fmt];
     }

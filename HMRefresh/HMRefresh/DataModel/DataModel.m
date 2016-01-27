@@ -58,7 +58,7 @@ static NSInteger kStartRowNumber = 20;
         // --- 生成测试数据完成 ---
         
         // 主线程回调 - 实际开发主要处理以下拼接数组的代码逻辑 --
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (maxId > 0) {
                 [self.dataList addObjectsFromArray:arrayM];
             } else {
