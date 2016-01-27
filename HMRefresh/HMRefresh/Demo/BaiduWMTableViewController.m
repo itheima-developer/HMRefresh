@@ -35,7 +35,7 @@
     UINib *nib = [UINib nibWithNibName:@"BaiduWMRefreshView" bundle:nil];
     refreshControl.pulldownView = [nib instantiateWithOwner:nil options:nil].lastObject;
     
-    self.refreshControl = refreshControl;
+    [self.tableView addSubview:refreshControl];
     
     [self loadData:refreshControl];
 }
