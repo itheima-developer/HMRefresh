@@ -19,9 +19,11 @@ typedef enum : NSUInteger {
 } HMRefreshState;
 
 /// 刷新类型枚举
+/// - HMRefreshTypeNone:          没有刷新
 /// - HMRefreshTypePulldown:      下拉刷新
 /// - HMRefreshTypePullup:        上拉刷新
 typedef enum : NSUInteger {
+    HMRefreshTypeNone,
     HMRefreshTypePulldown,
     HMRefreshTypePullup
 } HMRefreshType;

@@ -44,8 +44,8 @@
 @property (nonatomic) UIView<HMRefreshViewDelegate> *pulldownView;
 /// 上拉刷新视图
 @property (nonatomic) UIView<HMRefreshViewDelegate> *pullupView;
-/// 是否正在刷新
-@property (nonatomic, readonly) BOOL isRefreshing;
+/// 刷新类型(无/下拉/上拉)
+@property (nonatomic, readonly) HMRefreshType refreshType;
 /// 是否上拉刷新
 @property (nonatomic, readonly) BOOL isPullupRefresh;
 /// 如果没有数据，上拉刷新重试次数，默认为 3
