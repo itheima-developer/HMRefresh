@@ -55,6 +55,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // KVO
     _scrollView = (UIScrollView *)newSuperview;
+    _scrollView.alwaysBounceVertical = YES;
     [newSuperview addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
     
     // 设置上拉视图位置
@@ -143,6 +144,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     if (self.refreshType == HMRefreshTypePullup) {
         self.pullupView.tipLabel.text = self.refreshingString;
+        [self startAnimating:self.pullupView];
         
         if ([self.pullupView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
             [self.pullupView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
@@ -154,13 +156,12 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         }
         
         [self evaluateScrollViewInset:-HMRefreshControlOffset completion:^{
-            
             self.pulldownView.tipLabel.text = self.refreshingString;
             self.pulldownView.pulldownIcon.hidden = YES;
             [self startAnimating:self.pulldownView];
             
             if ([self.pulldownView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
-                [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:HMRefreshTypePulldown];
+                [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
             }
             _refreshState = HMRefreshStateRefreshing;
         }];
@@ -171,15 +172,14 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     // 上拉刷新结束
     if (_refreshType == HMRefreshTypePullup) {
         [self stopAnimating:self.pullupView];
+        self.pullupView.tipLabel.text = self.normalPullupString;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             if ([[self lastIndexPath] compare:_prePullupIndexPath] == NSOrderedSame) {
                 _retryTimes++;
                 self.pullupView.tipLabel.text = self.noDataString;
             } else {
                 _retryTimes = 0;
-                self.pullupView.tipLabel.text = @"上拉刷新数据";
             }
             [self setPullupViewLocation];
             
@@ -311,8 +311,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     if (![self isAnimating:self.pullupView]) {
         _refreshType = HMRefreshTypePullup;
         
-        [self startAnimating:self.pullupView];
-        
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
@@ -439,6 +437,13 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         _normalString = @"下拉刷新数据";
     }
     return _normalString;
+}
+
+- (NSString *)normalPullupString {
+    if (_normalPullupString == nil) {
+        _normalPullupString = @"上拉刷新数据";
+    }
+    return _normalPullupString;
 }
 
 - (NSString *)pullingString {

@@ -58,6 +58,8 @@
 
 /// 默认状态提示文字，默认：@"下拉刷新数据"
 @property (nonatomic) NSString *normalString;
+/// 默认上拉状态提示文字，默认：@"上拉刷新数据"
+@property (nonatomic) NSString *normalPullupString;
 /// 将要刷新提示文字，默认：@"放开开始刷新"
 @property (nonatomic) NSString *pullingString;
 /// 正在刷新提示文字，默认：@"正在刷新数据..."
