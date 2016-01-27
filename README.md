@@ -22,7 +22,7 @@
 
 ## 系统支持
 
-* iOS 8.0+
+* iOS 7.0+
 * Xcode 7.0
 
 ## 安装 
@@ -38,7 +38,7 @@ $ pod init
 * 在 Podfile 中输入以下内容：
 
 ```
-platform :ios, '8.0'
+platform :ios, '7.0'
 use_frameworks!
 
 target 'ProjectName' do
@@ -72,8 +72,12 @@ $ pod update
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.refreshControl = [[HMRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+    // 添加刷新控件
+    HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
+
+    [self loadData:refreshControl];
 }
 ```
 
@@ -134,8 +138,10 @@ import HMRefresh
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.refreshControl = HMRefreshControl()
-    self.refreshControl?.addTarget(self, action: "loadData:", forControlEvents: .ValueChanged)
+    let refreshControl = HMRefreshControl()
+    self.tableView.addSubview(refreshControl)
+
+    refreshControl.addTarget(self, action: "loadData:", forControlEvents: .ValueChanged)
 }
 ```
 
