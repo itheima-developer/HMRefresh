@@ -31,24 +31,23 @@
     
     // 添加刷新控件
     HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
+    
     refreshControl.normalString = @"下拉起飞";
     refreshControl.pullingString = @"放开起飞";
     refreshControl.refreshingString = @"正在起飞";
     refreshControl.lastRefreshString = @"上次起飞 ";
     refreshControl.donotPullupString = @"没油了，不飞了";
     
-    self.refreshControl = refreshControl;
-    [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
+    [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
     
     UINib *nib = [UINib nibWithNibName:@"DemoRefreshView" bundle:nil];
     refreshControl.pulldownView = [nib instantiateWithOwner:nil options:nil].lastObject;
     
-    [self loadData];
+    [self loadData:refreshControl];
 }
 
-- (void)loadData {
-    
-    HMRefreshControl *refreshControl = (HMRefreshControl *)self.refreshControl;
+- (void)loadData:(HMRefreshControl *)refreshControl {
     
     // 开始刷新
     [refreshControl beginRefreshing];

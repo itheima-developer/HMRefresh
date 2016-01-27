@@ -39,15 +39,22 @@
  
  @remark 注意 `网络请求` 方法中要根据 `isPullupRefresh` 参数决定如何加载数据，具体代码可以参照 `DataModel` 中的示例代码
  */
-@interface HMRefreshControl : UIRefreshControl
+@interface HMRefreshControl : UIControl
 /// 下拉刷新视图
 @property (nonatomic) UIView<HMRefreshViewDelegate> *pulldownView;
 /// 上拉刷新视图
 @property (nonatomic) UIView<HMRefreshViewDelegate> *pullupView;
+/// 是否正在刷新
+@property (nonatomic, readonly) BOOL isRefreshing;
 /// 是否上拉刷新
 @property (nonatomic, readonly) BOOL isPullupRefresh;
 /// 如果没有数据，上拉刷新重试次数，默认为 3
 @property (nonatomic) NSInteger pullupRetryTimes;
+
+/// 开始刷新
+- (void)beginRefreshing;
+/// 结束刷新
+- (void)endRefreshing;
 
 /// 默认状态提示文字，默认：@"下拉刷新数据"
 @property (nonatomic) NSString *normalString;

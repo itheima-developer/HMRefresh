@@ -29,16 +29,15 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
     // 添加刷新控件
-    self.refreshControl = [[HMRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
     
-    [self loadData];
+    [self loadData:refreshControl];
 }
 
-- (void)loadData {
-    
-    HMRefreshControl *refreshControl = (HMRefreshControl *)self.refreshControl;
-    
+- (void)loadData:(HMRefreshControl *)refreshControl {
+        
     // 开始刷新
     [refreshControl beginRefreshing];
     [self.dataModel loadData:refreshControl.isPullupRefresh completion:^{
