@@ -7,6 +7,7 @@
 //
 
 #import "SimpleTableViewController.h"
+#import "SimpleViewController.h"
 #import "CustomTableViewController.h"
 #import "BaiduWMTableViewController.h"
 #import "SimpleCollectionViewController.h"

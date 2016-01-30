@@ -57,9 +57,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     _scrollView = (UIScrollView *)newSuperview;
     _scrollView.alwaysBounceVertical = YES;
     [newSuperview addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
-    
-    // 设置上拉视图位置
-    [self setPullupViewLocation];
+    [newSuperview addObserver:self forKeyPath:@"contentSize" options:0 context:nil];
 }
 
 /// 设置上拉视图位置
@@ -85,6 +83,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 
 - (void)removeFromSuperview {
     [self.superview removeObserver:self forKeyPath:@"contentOffset"];
+    [self.superview removeObserver:self forKeyPath:@"contentSize"];
     [super removeFromSuperview];
 }
 
@@ -185,7 +184,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
             } else {
                 _retryTimes = 0;
             }
-            [self setPullupViewLocation];
             
             _refreshType = HMRefreshTypeNone;
             
@@ -207,8 +205,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         self.pulldownView.tipLabel.text = self.normalString;
         
         _refreshState = HMRefreshStateNormal;
-        // 设置上拉视图位置
-        [self setPullupViewLocation];
         
         // 通知视图刷新完成
         if ([self.pulldownView respondsToSelector:@selector(refreshViewDidEndRefreshed:)]) {
@@ -241,6 +237,12 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    
+    if ([keyPath isEqual: @"contentSize"]) {
+        [self setPullupViewLocation];
+        
+        return;
+    }
     
     UIScrollView *scrollView = self.scrollView;
     if (scrollView == nil) {

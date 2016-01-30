@@ -20,6 +20,7 @@
 		C25056141C51EF8700EC7C67 /* SimpleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056131C51EF8700EC7C67 /* SimpleCollectionViewController.m */; };
 		C25056171C51F91300EC7C67 /* DemoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */; };
 		C250561A1C520A0E00EC7C67 /* CustomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C25056191C520A0E00EC7C67 /* CustomTableViewController.m */; };
+		C267B13E1C5CC83600CBF3A9 /* SimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C267B13D1C5CC83600CBF3A9 /* SimpleViewController.m */; };
 		C2B8DB041C557012006AD0A1 /* BaiduWMTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B8DB031C557012006AD0A1 /* BaiduWMTableViewController.m */; };
 		C2B8DB081C557136006AD0A1 /* BaiduWMRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B8DB071C557136006AD0A1 /* BaiduWMRefreshView.m */; };
 		C2B8DB0A1C557283006AD0A1 /* BaiduWMRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2B8DB091C557283006AD0A1 /* BaiduWMRefreshView.xib */; };
@@ -53,6 +54,8 @@
 		C25056161C51F91300EC7C67 /* DemoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoCollectionViewCell.m; sourceTree = "<group>"; };
 		C25056181C520A0E00EC7C67 /* CustomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewController.h; sourceTree = "<group>"; };
 		C25056191C520A0E00EC7C67 /* CustomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewController.m; sourceTree = "<group>"; };
+		C267B13C1C5CC83600CBF3A9 /* SimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleViewController.h; sourceTree = "<group>"; };
+		C267B13D1C5CC83600CBF3A9 /* SimpleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleViewController.m; sourceTree = "<group>"; };
 		C2B8DB021C557012006AD0A1 /* BaiduWMTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduWMTableViewController.h; sourceTree = "<group>"; };
 		C2B8DB031C557012006AD0A1 /* BaiduWMTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduWMTableViewController.m; sourceTree = "<group>"; };
 		C2B8DB061C557136006AD0A1 /* BaiduWMRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduWMRefreshView.h; sourceTree = "<group>"; };
@@ -174,11 +177,21 @@
 			children = (
 				C2456DE41C50DA4000A793A4 /* DemoControllers.h */,
 				C22ECCB31C520F0400435F16 /* 简单表格 */,
+				C28476741C5D5C3100905F02 /* UIViewController+TableView */,
 				C22ECCB41C520F1000435F16 /* 自定义刷新视图 */,
 				C2B8DB051C557018006AD0A1 /* 仿百度外卖 */,
 				C22ECCB51C520F1A00435F16 /* 简单CollectionView */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		C28476741C5D5C3100905F02 /* UIViewController+TableView */ = {
+			isa = PBXGroup;
+			children = (
+				C267B13C1C5CC83600CBF3A9 /* SimpleViewController.h */,
+				C267B13D1C5CC83600CBF3A9 /* SimpleViewController.m */,
+			);
+			name = "UIViewController+TableView";
 			sourceTree = "<group>";
 		};
 		C2B8DB051C557018006AD0A1 /* 仿百度外卖 */ = {
@@ -269,6 +282,7 @@
 				C2B8DB081C557136006AD0A1 /* BaiduWMRefreshView.m in Sources */,
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
 				C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */,
+				C267B13E1C5CC83600CBF3A9 /* SimpleViewController.m in Sources */,
 				C2B8DB041C557012006AD0A1 /* BaiduWMTableViewController.m in Sources */,
 				C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
