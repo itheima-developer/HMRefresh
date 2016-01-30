@@ -123,32 +123,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 - (void)beginRefreshing {
-    [self showRefreshDate:[NSDate date]];
     
-    if (self.refreshType == HMRefreshTypePullup) {
-        self.pullupView.tipLabel.text = self.refreshingString;
-        [self startAnimating:self.pullupView];
-        
-        if ([self.pullupView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
-            [self.pullupView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
-        }
-    } else {
-        _refreshType = HMRefreshTypePulldown;
-        if (self.frame.size.height <= 0) {
-            self.frame = CGRectMake(0, HMRefreshControlOffset, self.bounds.size.width, -HMRefreshControlOffset);
-        }
-        
-        [self evaluateScrollViewInset:-HMRefreshControlOffset completion:^{
-            self.pulldownView.tipLabel.text = self.refreshingString;
-            self.pulldownView.pulldownIcon.hidden = YES;
-            [self startAnimating:self.pulldownView];
-            
-            if ([self.pulldownView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
-                [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
-            }
-            _refreshState = HMRefreshStateRefreshing;
-        }];
-    }
 }
 
 - (void)endRefreshing {
@@ -318,7 +293,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     if (![self isAnimating:self.pullupView]) {
         _refreshType = HMRefreshTypePullup;
         
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
+        [self prepareRefresh];
     }
 }
 
@@ -375,14 +350,48 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         }
             break;
         case HMRefreshStateRefreshing:
-            // 判断是否添加了监听方法
-            if (self.allTargets.count == 0) {
-                self.refreshState = HMRefreshStateNormal;
-            } else {
-                [self sendActionsForControlEvents:UIControlEventValueChanged];
-            }
+            [self prepareRefresh];
             
             break;
+    }
+}
+
+/// 准备刷新
+- (void)prepareRefresh {
+    // 判断是否添加了监听方法
+    if (self.allTargets.count == 0) {
+        self.refreshState = HMRefreshStateNormal;
+        
+        return;
+    }
+    
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    
+    [self showRefreshDate:[NSDate date]];
+    
+    if (self.refreshType == HMRefreshTypePullup) {
+        self.pullupView.tipLabel.text = self.refreshingString;
+        [self startAnimating:self.pullupView];
+        
+        if ([self.pullupView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
+            [self.pullupView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
+        }
+    } else {
+        _refreshType = HMRefreshTypePulldown;
+        if (self.frame.size.height <= 0) {
+            self.frame = CGRectMake(0, HMRefreshControlOffset, self.bounds.size.width, -HMRefreshControlOffset);
+        }
+        
+        [self evaluateScrollViewInset:-HMRefreshControlOffset completion:^{
+            self.pulldownView.tipLabel.text = self.refreshingString;
+            self.pulldownView.pulldownIcon.hidden = YES;
+            [self startAnimating:self.pulldownView];
+            
+            if ([self.pulldownView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
+                [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
+            }
+            _refreshState = HMRefreshStateRefreshing;
+        }];
     }
 }
 
