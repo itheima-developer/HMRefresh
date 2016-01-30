@@ -374,7 +374,12 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         }
             break;
         case HMRefreshStateRefreshing:
-            [self sendActionsForControlEvents:UIControlEventValueChanged];
+            // 判断是否添加了监听方法
+            if (self.allTargets.count == 0) {
+                self.refreshState = HMRefreshStateNormal;
+            } else {
+                [self sendActionsForControlEvents:UIControlEventValueChanged];
+            }
             
             break;
     }

@@ -36,6 +36,13 @@
     HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
     [_tableView addSubview:refreshControl];
     refreshControl.pullupView.backgroundColor = [UIColor redColor];
+    
+    [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)loadData:(HMRefreshControl *)refreshControl {
+    
+    NSLog(@"刷新数据");
 }
 
 @end
