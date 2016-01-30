@@ -56,29 +56,9 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     // KVO
     _scrollView = (UIScrollView *)newSuperview;
     _scrollView.alwaysBounceVertical = YES;
+    
     [newSuperview addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
     [newSuperview addObserver:self forKeyPath:@"contentSize" options:0 context:nil];
-}
-
-/// 设置上拉视图位置
-- (void)setPullupViewLocation {
-    UIScrollView *scrollView = self.scrollView;
-    if (scrollView == nil) {
-        return;
-    }
-    
-    CGRect rect = self.pullupView.bounds;
-    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y - self.frame.origin.y) {
-        CGSize size = scrollView.bounds.size;
-        
-        size.height += scrollView.contentOffset.y - self.frame.origin.y;
-        scrollView.contentSize = size;
-    }
-    
-    rect.origin.y = scrollView.contentSize.height;
-    rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
-    
-    self.pullupView.frame = rect;
 }
 
 - (void)removeFromSuperview {
@@ -279,6 +259,27 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
             self.refreshState = HMRefreshStateRefreshing;
         }
     }
+}
+
+/// 设置上拉视图位置
+- (void)setPullupViewLocation {
+    UIScrollView *scrollView = self.scrollView;
+    if (scrollView == nil) {
+        return;
+    }
+    
+    CGRect rect = self.pullupView.bounds;
+    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y - self.frame.origin.y) {
+        CGSize size = scrollView.bounds.size;
+        
+        size.height += scrollView.contentOffset.y - self.frame.origin.y;
+        scrollView.contentSize = size;
+    }
+    
+    rect.origin.y = scrollView.contentSize.height;
+    rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
+    
+    self.pullupView.frame = rect;
 }
 
 /// 检查上拉刷新
