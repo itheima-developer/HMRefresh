@@ -30,7 +30,9 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     BOOL _isEvaluateInset;
     BOOL _isRefreshing;
+    CGFloat _insetOffset;
 }
+
 @synthesize pulldownView = _pulldownView;
 @synthesize pullupView = _pullupView;
 
@@ -218,7 +220,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (void)evaluateScrollViewIsBeginRefresh:(BOOL)isBeginRefresh completion:(void (^)())completion {
     // 恢复顶部滑动距离
     UIEdgeInsets inset = self.scrollView.contentInset;
-    CGFloat offset = self.pulldownView.bounds.size.height;
+    CGFloat offset = _insetOffset;
     
     if (_isEvaluateInset) {
         inset.top += isBeginRefresh ? +offset : -offset;
@@ -476,6 +478,8 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     UIEdgeInsets inset = self.scrollView.contentInset;
     inset.bottom += _pullupView.bounds.size.height;
     self.scrollView.contentInset = inset;
+    
+    _insetOffset = _pulldownView.bounds.size.height;
 }
 
 #pragma mark - 提示文字
