@@ -51,11 +51,13 @@
     [_tableView addSubview:refreshControl];
     
     [refreshControl addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventValueChanged];
+    [self loadData:refreshControl];
 }
 
 - (void)loadData:(HMRefreshControl *)refreshControl {
     
     NSLog(@"刷新数据");
+    [refreshControl beginRefreshing];
     [self.dataModel loadData:refreshControl.isPullupRefresh completion:^{
         // 结束刷新
         [refreshControl endRefreshing];

@@ -77,6 +77,11 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    if (self.frame.size.height <= 0) {
+        CGFloat height = self.pulldownView.bounds.size.height;
+        self.frame = CGRectMake(0, -height, self.scrollView.bounds.size.width, height);
+    }
+    
     CGFloat x = self.bounds.size.width * 0.5;
     CGFloat y = (self.bounds.size.height - self.pulldownView.bounds.size.height * 0.5);
     self.pulldownView.center = CGPointMake(x, y);
@@ -143,11 +148,8 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         }
     } else {
         _refreshType = HMRefreshTypePulldown;
-        if (self.frame.size.height <= 0) {
-            self.frame = CGRectMake(0, HMRefreshControlOffset, self.bounds.size.width, -HMRefreshControlOffset);
-        }
-        
         _isEvaluateInset = YES;
+        
         [self evaluateScrollViewIsBeginRefresh:YES completion:^{
             self.pulldownView.tipLabel.text = self.refreshingString;
             self.pulldownView.pulldownIcon.hidden = YES;
