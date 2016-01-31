@@ -49,6 +49,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         // 设置背景颜色
         self.backgroundColor = [UIColor clearColor];
         self.clipsToBounds = YES;
+        self.hidden = YES;
     }
     return self;
 }
@@ -151,6 +152,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     } else {
         _refreshType = HMRefreshTypePulldown;
         _isEvaluateInset = YES;
+        self.hidden = NO;
         
         [self evaluateScrollViewIsBeginRefresh:YES completion:^{
             self.pulldownView.tipLabel.text = self.refreshingString;
@@ -192,6 +194,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // 下拉刷新结束
     _refreshType = HMRefreshTypeNone;
+    self.hidden = YES;
     [self evaluateScrollViewIsBeginRefresh:NO completion:^{
         _isEvaluateInset = NO;
         
@@ -268,6 +271,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // 下拉刷新逻辑
     if (scrollView.isDragging) {
+        self.hidden = NO;
         if (self.refreshState == HMRefreshStateNormal && self.frame.origin.y < HMRefreshControlOffset) {
             self.refreshState = HMRefreshStatePulling;
         } else if (self.refreshState == HMRefreshStatePulling && self.frame.origin.y > HMRefreshControlOffset) {
@@ -306,7 +310,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 
 /// 检查上拉刷新
 - (void)checkPullup {
-    
     if (!([self.scrollView isKindOfClass:[UITableView class]] || [self.scrollView isKindOfClass:[UICollectionView class]])) {
         return;
     }
@@ -320,10 +323,11 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     _prePullupIndexPath = [self lastIndexPath];
     if (_prePullupIndexPath == nil) {
-        self.pullupView.tipLabel.text = self.noDataString;
+        self.pullupView.hidden = YES;
         return;
     }
     
+    self.pullupView.hidden = NO;
     SEL numberSel;
     if ([parentView isKindOfClass:[UITableView class]]) {
         numberSel = @selector(cellForRowAtIndexPath:);
@@ -465,6 +469,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     [_pullupView removeFromSuperview];
     
     _pullupView = pullupView;
+    _pullupView.hidden = YES;
     [self.scrollView addSubview:_pullupView];
     
     // 调整底部间距
