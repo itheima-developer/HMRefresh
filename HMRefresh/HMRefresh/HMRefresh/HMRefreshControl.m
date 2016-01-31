@@ -27,7 +27,12 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     CGFloat _preOffsetY;
     NSIndexPath *_prePullupIndexPath;
     NSInteger _retryTimes;
+    
+    BOOL _isEvaluateInset;
+    BOOL _isRefreshing;
+    CGFloat _insetOffset;
 }
+
 @synthesize pulldownView = _pulldownView;
 @synthesize pullupView = _pullupView;
 
@@ -46,6 +51,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         // 设置背景颜色
         self.backgroundColor = [UIColor clearColor];
         self.clipsToBounds = YES;
+        self.hidden = YES;
     }
     return self;
 }
@@ -53,38 +59,19 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     
+    [self showRefreshDate:[NSDate date]];
+    
     // KVO
     _scrollView = (UIScrollView *)newSuperview;
     _scrollView.alwaysBounceVertical = YES;
+    
     [newSuperview addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
-    
-    // 设置上拉视图位置
-    [self setPullupViewLocation];
-}
-
-/// 设置上拉视图位置
-- (void)setPullupViewLocation {
-    UIScrollView *scrollView = self.scrollView;
-    if (scrollView == nil) {
-        return;
-    }
-    
-    CGRect rect = self.pullupView.bounds;
-    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y - self.frame.origin.y) {
-        CGSize size = scrollView.bounds.size;
-        
-        size.height += scrollView.contentOffset.y - self.frame.origin.y;
-        scrollView.contentSize = size;
-    }
-    
-    rect.origin.y = scrollView.contentSize.height;
-    rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
-    
-    self.pullupView.frame = rect;
+    [newSuperview addObserver:self forKeyPath:@"contentSize" options:0 context:nil];
 }
 
 - (void)removeFromSuperview {
     [self.superview removeObserver:self forKeyPath:@"contentOffset"];
+    [self.superview removeObserver:self forKeyPath:@"contentSize"];
     [super removeFromSuperview];
 }
 
@@ -94,6 +81,11 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    if (self.frame.size.height <= 0) {
+        CGFloat height = self.pulldownView.bounds.size.height;
+        self.frame = CGRectMake(0, -height, self.scrollView.bounds.size.width, height);
+    }
     
     CGFloat x = self.bounds.size.width * 0.5;
     CGFloat y = (self.bounds.size.height - self.pulldownView.bounds.size.height * 0.5);
@@ -144,6 +136,12 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 - (void)beginRefreshing {
+    
+    if (_isRefreshing) {
+        return;
+    }
+    _isRefreshing = YES;
+    
     [self showRefreshDate:[NSDate date]];
     
     if (self.refreshType == HMRefreshTypePullup) {
@@ -155,11 +153,10 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         }
     } else {
         _refreshType = HMRefreshTypePulldown;
-        if (self.frame.size.height <= 0) {
-            self.frame = CGRectMake(0, HMRefreshControlOffset, self.bounds.size.width, -HMRefreshControlOffset);
-        }
+        _isEvaluateInset = YES;
+        self.hidden = NO;
         
-        [self evaluateScrollViewInset:-HMRefreshControlOffset completion:^{
+        [self evaluateScrollViewIsBeginRefresh:YES completion:^{
             self.pulldownView.tipLabel.text = self.refreshingString;
             self.pulldownView.pulldownIcon.hidden = YES;
             [self startAnimating:self.pulldownView];
@@ -173,6 +170,8 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 - (void)endRefreshing {
+    _isRefreshing = NO;
+    
     // 上拉刷新结束
     if (_refreshType == HMRefreshTypePullup) {
         [self stopAnimating:self.pullupView];
@@ -185,7 +184,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
             } else {
                 _retryTimes = 0;
             }
-            [self setPullupViewLocation];
             
             _refreshType = HMRefreshTypeNone;
             
@@ -198,7 +196,10 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // 下拉刷新结束
     _refreshType = HMRefreshTypeNone;
-    [self evaluateScrollViewInset:HMRefreshControlOffset completion:^{
+    self.hidden = YES;
+    [self evaluateScrollViewIsBeginRefresh:NO completion:^{
+        _isEvaluateInset = NO;
+        
         // 设置下拉视图状态
         [self.pulldownView.refreshIndicator stopAnimating];
         self.pulldownView.pulldownIcon.hidden = NO;
@@ -207,8 +208,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         self.pulldownView.tipLabel.text = self.normalString;
         
         _refreshState = HMRefreshStateNormal;
-        // 设置上拉视图位置
-        [self setPullupViewLocation];
         
         // 通知视图刷新完成
         if ([self.pulldownView respondsToSelector:@selector(refreshViewDidEndRefreshed:)]) {
@@ -218,10 +217,14 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 #pragma mark - KVO 相关方法
-- (void)evaluateScrollViewInset:(CGFloat)offset completion:(void (^)())completion {
+- (void)evaluateScrollViewIsBeginRefresh:(BOOL)isBeginRefresh completion:(void (^)())completion {
     // 恢复顶部滑动距离
     UIEdgeInsets inset = self.scrollView.contentInset;
-    inset.top += offset;
+    CGFloat offset = _insetOffset;
+    
+    if (_isEvaluateInset) {
+        inset.top += isBeginRefresh ? +offset : -offset;
+    }
     
     [UIView animateWithDuration:0.25 animations:^{
         self.scrollView.contentInset = inset;
@@ -241,6 +244,12 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    
+    if ([keyPath isEqual: @"contentSize"]) {
+        [self setPullupViewLocation];
+        
+        return;
+    }
     
     UIScrollView *scrollView = self.scrollView;
     if (scrollView == nil) {
@@ -264,6 +273,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // 下拉刷新逻辑
     if (scrollView.isDragging) {
+        self.hidden = NO;
         if (self.refreshState == HMRefreshStateNormal && self.frame.origin.y < HMRefreshControlOffset) {
             self.refreshState = HMRefreshStatePulling;
         } else if (self.refreshState == HMRefreshStatePulling && self.frame.origin.y > HMRefreshControlOffset) {
@@ -279,9 +289,29 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     }
 }
 
+/// 设置上拉视图位置
+- (void)setPullupViewLocation {
+    UIScrollView *scrollView = self.scrollView;
+    if (scrollView == nil) {
+        return;
+    }
+    
+    CGRect rect = self.pullupView.bounds;
+    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y - self.frame.origin.y) {
+        CGSize size = scrollView.bounds.size;
+        
+        size.height += scrollView.contentOffset.y - self.frame.origin.y;
+        scrollView.contentSize = size;
+    }
+    
+    rect.origin.y = scrollView.contentSize.height;
+    rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;
+    
+    self.pullupView.frame = rect;
+}
+
 /// 检查上拉刷新
 - (void)checkPullup {
-    
     if (!([self.scrollView isKindOfClass:[UITableView class]] || [self.scrollView isKindOfClass:[UICollectionView class]])) {
         return;
     }
@@ -295,10 +325,11 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     _prePullupIndexPath = [self lastIndexPath];
     if (_prePullupIndexPath == nil) {
-        self.pullupView.tipLabel.text = self.noDataString;
+        self.pullupView.hidden = YES;
         return;
     }
     
+    self.pullupView.hidden = NO;
     SEL numberSel;
     if ([parentView isKindOfClass:[UITableView class]]) {
         numberSel = @selector(cellForRowAtIndexPath:);
@@ -315,7 +346,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     if (![self isAnimating:self.pullupView]) {
         _refreshType = HMRefreshTypePullup;
         
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
+        [self prepareRefresh];
     }
 }
 
@@ -372,10 +403,23 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         }
             break;
         case HMRefreshStateRefreshing:
-            [self sendActionsForControlEvents:UIControlEventValueChanged];
+            [self prepareRefresh];
             
             break;
     }
+}
+
+/// 准备刷新
+- (void)prepareRefresh {
+    // 判断是否添加了监听方法
+    if (self.allTargets.count == 0) {
+        self.refreshState = HMRefreshStateNormal;
+        
+        return;
+    }
+    
+    [self beginRefreshing];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - 刷新视图方法
@@ -427,12 +471,15 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     [_pullupView removeFromSuperview];
     
     _pullupView = pullupView;
+    _pullupView.hidden = YES;
     [self.scrollView addSubview:_pullupView];
     
     // 调整底部间距
     UIEdgeInsets inset = self.scrollView.contentInset;
     inset.bottom += _pullupView.bounds.size.height;
     self.scrollView.contentInset = inset;
+    
+    _insetOffset = _pulldownView.bounds.size.height;
 }
 
 #pragma mark - 提示文字
