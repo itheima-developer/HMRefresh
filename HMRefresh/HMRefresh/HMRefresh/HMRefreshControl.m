@@ -27,6 +27,9 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     CGFloat _preOffsetY;
     NSIndexPath *_prePullupIndexPath;
     NSInteger _retryTimes;
+    
+    BOOL _isEvaluateInset;
+    BOOL _isRefreshing;
 }
 @synthesize pulldownView = _pulldownView;
 @synthesize pullupView = _pullupView;
@@ -124,9 +127,43 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 
 - (void)beginRefreshing {
     
+    if (_isRefreshing) {
+        return;
+    }
+    _isRefreshing = YES;
+    
+    [self showRefreshDate:[NSDate date]];
+    
+    if (self.refreshType == HMRefreshTypePullup) {
+        self.pullupView.tipLabel.text = self.refreshingString;
+        [self startAnimating:self.pullupView];
+        
+        if ([self.pullupView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
+            [self.pullupView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
+        }
+    } else {
+        _refreshType = HMRefreshTypePulldown;
+        if (self.frame.size.height <= 0) {
+            self.frame = CGRectMake(0, HMRefreshControlOffset, self.bounds.size.width, -HMRefreshControlOffset);
+        }
+        
+        _isEvaluateInset = YES;
+        [self evaluateScrollViewIsBeginRefresh:YES completion:^{
+            self.pulldownView.tipLabel.text = self.refreshingString;
+            self.pulldownView.pulldownIcon.hidden = YES;
+            [self startAnimating:self.pulldownView];
+            
+            if ([self.pulldownView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
+                [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
+            }
+            _refreshState = HMRefreshStateRefreshing;
+        }];
+    }
 }
 
 - (void)endRefreshing {
+    _isRefreshing = NO;
+    
     // 上拉刷新结束
     if (_refreshType == HMRefreshTypePullup) {
         [self stopAnimating:self.pullupView];
@@ -151,7 +188,9 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     
     // 下拉刷新结束
     _refreshType = HMRefreshTypeNone;
-    [self evaluateScrollViewInset:HMRefreshControlOffset completion:^{
+    [self evaluateScrollViewIsBeginRefresh:NO completion:^{
+        _isEvaluateInset = NO;
+        
         // 设置下拉视图状态
         [self.pulldownView.refreshIndicator stopAnimating];
         self.pulldownView.pulldownIcon.hidden = NO;
@@ -169,10 +208,14 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 }
 
 #pragma mark - KVO 相关方法
-- (void)evaluateScrollViewInset:(CGFloat)offset completion:(void (^)())completion {
+- (void)evaluateScrollViewIsBeginRefresh:(BOOL)isBeginRefresh completion:(void (^)())completion {
     // 恢复顶部滑动距离
     UIEdgeInsets inset = self.scrollView.contentInset;
-    inset.top += offset;
+    CGFloat offset = self.pulldownView.bounds.size.height;
+    
+    if (_isEvaluateInset) {
+        inset.top += isBeginRefresh ? +offset : -offset;
+    }
     
     [UIView animateWithDuration:0.25 animations:^{
         self.scrollView.contentInset = inset;
@@ -365,34 +408,8 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
         return;
     }
     
+    [self beginRefreshing];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
-    
-    [self showRefreshDate:[NSDate date]];
-    
-    if (self.refreshType == HMRefreshTypePullup) {
-        self.pullupView.tipLabel.text = self.refreshingString;
-        [self startAnimating:self.pullupView];
-        
-        if ([self.pullupView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
-            [self.pullupView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
-        }
-    } else {
-        _refreshType = HMRefreshTypePulldown;
-        if (self.frame.size.height <= 0) {
-            self.frame = CGRectMake(0, HMRefreshControlOffset, self.bounds.size.width, -HMRefreshControlOffset);
-        }
-        
-        [self evaluateScrollViewInset:-HMRefreshControlOffset completion:^{
-            self.pulldownView.tipLabel.text = self.refreshingString;
-            self.pulldownView.pulldownIcon.hidden = YES;
-            [self startAnimating:self.pulldownView];
-            
-            if ([self.pulldownView respondsToSelector:@selector(refreshViewDidRefreshing:refreshType:)]) {
-                [self.pulldownView refreshViewDidRefreshing:self.pullupView refreshType:_refreshType];
-            }
-            _refreshState = HMRefreshStateRefreshing;
-        }];
-    }
 }
 
 #pragma mark - 刷新视图方法
