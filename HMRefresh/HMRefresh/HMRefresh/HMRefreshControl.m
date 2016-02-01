@@ -200,6 +200,9 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     [self evaluateScrollViewIsBeginRefresh:NO completion:^{
         _isEvaluateInset = NO;
         
+        // 下拉刷新结束后，重置上拉刷新计数
+        _retryTimes = 0;
+        
         // 设置下拉视图状态
         [self.pulldownView.refreshIndicator stopAnimating];
         self.pulldownView.pulldownIcon.hidden = NO;
@@ -297,10 +300,10 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     }
     
     CGRect rect = self.pullupView.bounds;
-    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y - self.frame.origin.y) {
+    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y + self.frame.origin.y) {
         CGSize size = scrollView.bounds.size;
         
-        size.height += scrollView.contentOffset.y - self.frame.origin.y;
+        size.height += scrollView.contentOffset.y + self.frame.origin.y;
         scrollView.contentSize = size;
     }
     
