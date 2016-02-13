@@ -59,8 +59,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     
-    [self showRefreshDate:[NSDate date]];
-    
     // KVO
     _scrollView = (UIScrollView *)newSuperview;
     _scrollView.alwaysBounceVertical = YES;
@@ -85,8 +83,8 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     CGSize size = self.bounds.size;
     CGFloat pulldownHeight = self.pulldownView.bounds.size.height;
     
-    if (size.height <= 0) {
-        self.frame = CGRectMake(0, -pulldownHeight, size.width, pulldownHeight);
+    if (size.height == 0 || size.width == 0) {
+        self.frame = CGRectMake(0, -pulldownHeight, self.scrollView.bounds.size.width, pulldownHeight);
     }
     
     CGFloat x = size.width * 0.5;
