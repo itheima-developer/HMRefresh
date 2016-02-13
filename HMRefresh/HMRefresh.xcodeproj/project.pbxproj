@@ -26,6 +26,9 @@
 		C2B8DB0A1C557283006AD0A1 /* BaiduWMRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2B8DB091C557283006AD0A1 /* BaiduWMRefreshView.xib */; };
 		C2EB654A1C520B480040A4B4 /* DemoRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2EB65491C520B480040A4B4 /* DemoRefreshView.m */; };
 		C2EB654C1C520B680040A4B4 /* DemoRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2EB654B1C520B680040A4B4 /* DemoRefreshView.xib */; };
+		C2F95C411C6ED4CA00936BA9 /* DemoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F95C401C6ED4CA00936BA9 /* DemoModel.m */; };
+		C2F95C441C6ED81B00936BA9 /* DemoListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F95C431C6ED81B00936BA9 /* DemoListViewModel.m */; };
+		C2F95C471C6EDAAF00936BA9 /* SimpleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F95C461C6EDAAF00936BA9 /* SimpleCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,12 @@
 		C2EB65481C520B480040A4B4 /* DemoRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRefreshView.h; sourceTree = "<group>"; };
 		C2EB65491C520B480040A4B4 /* DemoRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoRefreshView.m; sourceTree = "<group>"; };
 		C2EB654B1C520B680040A4B4 /* DemoRefreshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoRefreshView.xib; sourceTree = "<group>"; };
+		C2F95C3F1C6ED4CA00936BA9 /* DemoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoModel.h; sourceTree = "<group>"; };
+		C2F95C401C6ED4CA00936BA9 /* DemoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoModel.m; sourceTree = "<group>"; };
+		C2F95C421C6ED81B00936BA9 /* DemoListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoListViewModel.h; sourceTree = "<group>"; };
+		C2F95C431C6ED81B00936BA9 /* DemoListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoListViewModel.m; sourceTree = "<group>"; };
+		C2F95C451C6EDAAF00936BA9 /* SimpleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleCell.h; sourceTree = "<group>"; };
+		C2F95C461C6EDAAF00936BA9 /* SimpleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +177,10 @@
 			children = (
 				C2456DDA1C50D8E000A793A4 /* DataModel.h */,
 				C2456DDB1C50D8E000A793A4 /* DataModel.m */,
+				C2F95C421C6ED81B00936BA9 /* DemoListViewModel.h */,
+				C2F95C431C6ED81B00936BA9 /* DemoListViewModel.m */,
+				C2F95C3F1C6ED4CA00936BA9 /* DemoModel.h */,
+				C2F95C401C6ED4CA00936BA9 /* DemoModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -176,6 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				C2456DE41C50DA4000A793A4 /* DemoControllers.h */,
+				C2F95C451C6EDAAF00936BA9 /* SimpleCell.h */,
+				C2F95C461C6EDAAF00936BA9 /* SimpleCell.m */,
 				C22ECCB31C520F0400435F16 /* 简单表格 */,
 				C28476741C5D5C3100905F02 /* UIViewController+TableView */,
 				C22ECCB41C520F1000435F16 /* 自定义刷新视图 */,
@@ -283,12 +298,15 @@
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
 				C2456DF11C51B8A000A793A4 /* HMRefreshView.m in Sources */,
 				C267B13E1C5CC83600CBF3A9 /* SimpleViewController.m in Sources */,
+				C2F95C441C6ED81B00936BA9 /* DemoListViewModel.m in Sources */,
 				C2B8DB041C557012006AD0A1 /* BaiduWMTableViewController.m in Sources */,
 				C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
 				C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */,
 				C2EB654A1C520B480040A4B4 /* DemoRefreshView.m in Sources */,
 				C250561A1C520A0E00EC7C67 /* CustomTableViewController.m in Sources */,
+				C2F95C471C6EDAAF00936BA9 /* SimpleCell.m in Sources */,
+				C2F95C411C6ED4CA00936BA9 /* DemoModel.m in Sources */,
 				C25056171C51F91300EC7C67 /* DemoCollectionViewCell.m in Sources */,
 				C2456DC61C50CF0900A793A4 /* AppDelegate.m in Sources */,
 				C2456DC31C50CF0900A793A4 /* main.m in Sources */,
