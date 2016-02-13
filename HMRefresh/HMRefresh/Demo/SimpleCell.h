@@ -10,4 +10,6 @@
 
 @interface SimpleCell : UITableViewCell
 
+@property (nonatomic) NSString *content;
+
 @end

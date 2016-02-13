@@ -48,19 +48,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>35881C0507F42A645D96D9BA</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_HMRefresh.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>4043AFF08E14D9C907000797</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -149,7 +136,7 @@ fi
 		<dict>
 			<key>children</key>
 			<array>
-				<string>35881C0507F42A645D96D9BA</string>
+				<string>EC64D32863E90DBFE4AD4139</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -158,10 +145,10 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>913BC13829861DAD60111CAC</key>
+		<key>ADF7A617E738CF4396E357E5</key>
 		<dict>
 			<key>fileRef</key>
-			<string>35881C0507F42A645D96D9BA</string>
+			<string>EC64D32863E90DBFE4AD4139</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -322,7 +309,7 @@ fi
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>913BC13829861DAD60111CAC</string>
+				<string>ADF7A617E738CF4396E357E5</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -1421,6 +1408,19 @@ fi
 			<string>C2F95C461C6EDAAF00936BA9</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>EC64D32863E90DBFE4AD4139</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-HMRefresh.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

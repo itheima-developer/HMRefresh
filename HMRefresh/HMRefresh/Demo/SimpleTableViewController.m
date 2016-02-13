@@ -28,6 +28,8 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[SimpleCell class] forCellReuseIdentifier:@"Cell"];
+    self.tableView.estimatedRowHeight = 80;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 添加刷新控件
     HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
@@ -56,9 +58,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    SimpleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.textLabel.text = self.listViewModel.dataList[indexPath.row].description;
+    cell.content = self.listViewModel.dataList[indexPath.row].description;
     
     return cell;
 }
