@@ -59,6 +59,8 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     
+    [self showRefreshDate:[NSDate date]];
+    
     // KVO
     _scrollView = (UIScrollView *)newSuperview;
     _scrollView.alwaysBounceVertical = YES;
