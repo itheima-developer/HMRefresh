@@ -38,7 +38,7 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 
 #pragma mark - 构造函数
 - (instancetype)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 320, 60)];
+    self = [super initWithFrame:CGRectZero];
     if (self) {
         // 没有新数据默认重试次数
         _pullupRetryTimes = 3;
@@ -82,13 +82,15 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    if (self.frame.size.height <= 0) {
-        CGFloat height = self.pulldownView.bounds.size.height;
-        self.frame = CGRectMake(0, -height, self.scrollView.bounds.size.width, height);
+    CGSize size = self.bounds.size;
+    CGFloat pulldownHeight = self.pulldownView.bounds.size.height;
+    
+    if (size.height == 0 || size.width == 0) {
+        self.frame = CGRectMake(0, -pulldownHeight, self.scrollView.bounds.size.width, pulldownHeight);
     }
     
-    CGFloat x = self.bounds.size.width * 0.5;
-    CGFloat y = (self.bounds.size.height - self.pulldownView.bounds.size.height * 0.5);
+    CGFloat x = size.width * 0.5;
+    CGFloat y = (size.height - pulldownHeight * 0.5);
     self.pulldownView.center = CGPointMake(x, y);
 }
 
@@ -300,12 +302,6 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     }
     
     CGRect rect = self.pullupView.bounds;
-    if (scrollView.contentSize.height < scrollView.bounds.size.height + scrollView.contentOffset.y + self.frame.origin.y) {
-        CGSize size = scrollView.bounds.size;
-        
-        size.height += scrollView.contentOffset.y + self.frame.origin.y;
-        scrollView.contentSize = size;
-    }
     
     rect.origin.y = scrollView.contentSize.height;
     rect.origin.x = (scrollView.bounds.size.width - rect.size.width) * 0.5;

@@ -7,26 +7,29 @@
 //
 
 #import "SimpleTableViewController.h"
-#import "DataModel.h"
+#import "DemoListViewModel.h"
+#import "SimpleCell.h"
 #import "HMRefreshControl.h"
 
 @interface SimpleTableViewController ()
-@property (nonatomic) DataModel *dataModel;
+@property (nonatomic) DemoListViewModel *listViewModel;
 @end
 
 @implementation SimpleTableViewController
 
-- (DataModel *)dataModel {
-    if (_dataModel == nil) {
-        _dataModel = [[DataModel alloc] init];
+- (DemoListViewModel *)listViewModel {
+    if (_listViewModel == nil) {
+        _listViewModel = [[DemoListViewModel alloc] init];
     }
-    return _dataModel;
+    return _listViewModel;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[SimpleCell class] forCellReuseIdentifier:@"Cell"];
+    self.tableView.estimatedRowHeight = 80;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 添加刷新控件
     HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
@@ -37,10 +40,10 @@
 }
 
 - (void)loadData:(HMRefreshControl *)refreshControl {
-        
+    
     // 开始刷新
     [refreshControl beginRefreshing];
-    [self.dataModel loadData:refreshControl.isPullupRefresh completion:^{
+    [self.listViewModel loadData:refreshControl.isPullupRefresh completion:^{
         // 结束刷新
         [refreshControl endRefreshing];
         
@@ -51,13 +54,13 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataModel.dataList.count;
+    return self.listViewModel.dataList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    SimpleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.dataModel.dataList[indexPath.row]];
+    cell.content = self.listViewModel.dataList[indexPath.row].description;
     
     return cell;
 }
