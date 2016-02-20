@@ -24,7 +24,7 @@
 
 #pragma mark - 构造函数
 - (instancetype)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 220, 44)];
+    self = [super initWithFrame:CGRectMake(0, 0, 198, 44)];
     if (self) {
         [self addSubview:self.containerView];
     }
@@ -50,7 +50,7 @@
 
 - (UILabel *)tipLabel {
     if (_tipLabel == nil) {
-        UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 8, 172, 16)];
+        UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 8, 106, 16)];
         
         tipLabel.font = [UIFont systemFontOfSize:13];
         tipLabel.textColor = [UIColor darkGrayColor];
@@ -64,11 +64,11 @@
 
 - (UILabel *)timeLabel {
     if (_timeLabel == nil) {
-        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 24, 172, 12)];
+        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 24, 106, 12)];
         
         timeLabel.font = [UIFont systemFontOfSize:10];
         timeLabel.textColor = [UIColor grayColor];
-        timeLabel.text = @"上次刷新 2016-01-01 24:59";
+        timeLabel.text = @"上次刷新 01-01 00:01";
         
         [self.containerView addSubview:timeLabel];
         _timeLabel = timeLabel;
@@ -103,7 +103,7 @@
 
 - (UIView *)containerView {
     if (_containerView == nil) {
-        _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
+        _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 198, 44)];
     }
     return _containerView;
 }
