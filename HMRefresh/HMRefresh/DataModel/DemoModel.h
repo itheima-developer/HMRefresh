@@ -6,12 +6,13 @@
 //  Copyright © 2016年 itheima. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface DemoModel : NSObject
 
 @property (nonatomic) NSInteger id;
 @property (nonatomic) NSString *str;
+@property (nonatomic) CGFloat rowHeight;
 
 + (instancetype)demoModelWithId:(NSInteger)id;
 
