@@ -105,14 +105,13 @@ NSString *const HMRefreshControlLastRefreshDateKey = @"HMRefreshControlLastRefre
     NSDateComponents *dateComponents = [_calendar components:unitFlags fromDate:date];
     
     NSString *fmt = @" HH:mm";
-    if (todayComponents.year == dateComponents.year) {
-        if (todayComponents.month == dateComponents.month && todayComponents.day == dateComponents.day) {
-            fmt = [@"今天 " stringByAppendingString:fmt];
-        } else {
-            fmt = [@"MM-dd " stringByAppendingString:fmt];
-        }
+    if (todayComponents.year == dateComponents.year &&
+        todayComponents.month == dateComponents.month &&
+        todayComponents.day == dateComponents.day) {
+        
+        fmt = [@"今天 " stringByAppendingString:fmt];
     } else {
-        fmt = [@"yyyy-MM-dd " stringByAppendingString:fmt];
+        fmt = [@"MM-dd " stringByAppendingString:fmt];
     }
     _dateFormatter.dateFormat = fmt;
     
