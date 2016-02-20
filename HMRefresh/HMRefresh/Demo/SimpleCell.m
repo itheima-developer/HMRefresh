@@ -38,13 +38,6 @@
             make.left.mas_equalTo(margin);
             make.right.mas_equalTo(-margin);
         }];
-        
-        [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.left.equalTo(self);
-            make.right.equalTo(self);
-            make.bottom.equalTo(_contentLabel.mas_bottom).offset(margin);
-        }];
     }
     return self;
 }
