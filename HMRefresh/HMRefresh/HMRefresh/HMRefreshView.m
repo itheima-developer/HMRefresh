@@ -78,10 +78,11 @@
 
 - (UIImageView *)pulldownIcon {
     if (_pulldownIcon == nil) {
-        UIImage *arrowimage = [UIImage imageNamed:@"tableview_pull_refresh" inBundle:self.imageBundle compatibleWithTraitCollection:nil];
+        NSString *imagePath = [self.imageBundle.bundlePath stringByAppendingPathComponent:@"tableview_pull_refresh.png"];
+        UIImage *arrowImage = [UIImage imageWithContentsOfFile:imagePath];
         
         UIImageView *pulldownIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 6, 32, 32)];
-        pulldownIcon.image = arrowimage;
+        pulldownIcon.image = arrowImage;
         pulldownIcon.hidden = YES;
         
         [self.containerView addSubview:pulldownIcon];

@@ -28,8 +28,6 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[SimpleCell class] forCellReuseIdentifier:@"Cell"];
-    self.tableView.estimatedRowHeight = 80;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 添加刷新控件
     HMRefreshControl *refreshControl = [[HMRefreshControl alloc] init];
@@ -63,6 +61,10 @@
     cell.content = self.listViewModel.dataList[indexPath.row].description;
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return self.listViewModel.dataList[indexPath.row].rowHeight;
 }
 
 @end
