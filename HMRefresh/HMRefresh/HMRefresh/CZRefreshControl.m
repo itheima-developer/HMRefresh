@@ -8,6 +8,11 @@
 
 #import "CZRefreshControl.h"
 
+/// 刷新控件偏移量
+#define HMRefreshControlOffset      60
+/// 上拉刷新视图高度
+#define HMRefreshPullupViewHeight   44
+
 @implementation CZRefreshControl {
     __weak UIScrollView *_scrollView;
 }
@@ -45,6 +50,11 @@
     _scrollView = (UIScrollView *)newSuperview;
     _scrollView.alwaysBounceVertical = YES;
     
+    // 添加上拉视图
+    if (_pullupView != nil) {
+        [newSuperview addSubview:_pullupView];
+    }
+    
     // KVO
     [newSuperview addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
     [newSuperview addObserver:self forKeyPath:@"contentSize" options:0 context:nil];
@@ -68,7 +78,73 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    NSLog(@"%@", _scrollView);
+    
+    if ([keyPath isEqual: @"contentSize"]) {
+        [self changePullupViewSize];
+    }
+    
+    [self changePulldownViewSize];
+    
+    CGFloat height = self.bounds.size.height;
+    if (height <= 0 || _pulldownView == nil) {
+        return;
+    }
+    
+    // 下拉刷新逻辑
+    if (_scrollView.isDragging) {
+        if (self.refreshState == CZRefreshStateNormal && height > HMRefreshControlOffset) {
+            self.refreshState = CZRefreshStatePulling;
+            NSLog(@"放开开始刷新");
+        } else if (self.refreshState == CZRefreshStatePulling && height < HMRefreshControlOffset) {
+            self.refreshState = CZRefreshStateNormal;
+            NSLog(@"下拉开始刷新");
+        }
+    } else {
+        if (self.refreshState == CZRefreshStatePulling) {
+            self.refreshState = CZRefreshStateRefreshing;
+            NSLog(@"开始刷新了");
+        }
+    }
+}
+
+/// 修改上拉视图大小
+- (void)changePullupViewSize {
+    
+    if (_scrollView == nil || _pullupView == nil) {
+        return;
+    }
+    
+    CGSize size = _scrollView.contentSize;
+    
+    _pullupView.frame = CGRectMake(0, size.height, size.width, HMRefreshPullupViewHeight);
+    
+    if (!CGRectIsEmpty(_scrollView.frame) && _pullupView.tag == 0) {
+        UIEdgeInsets inset = _scrollView.contentInset;
+        inset.bottom += HMRefreshPullupViewHeight;
+        
+        [_scrollView removeObserver:self forKeyPath:@"contentSize"];
+        _scrollView.contentInset = inset;
+        [_scrollView addObserver:self forKeyPath:@"contentSize" options:0 context:nil];
+        
+        _pullupView.tag = 1;
+    }
+}
+
+/// 修改下拉视图大小
+- (void)changePulldownViewSize {
+    
+    if (_scrollView == nil || _pulldownView == nil) {
+        return;
+    }
+    
+    CGFloat height = -(_scrollView.contentOffset.y + _scrollView.contentInset.top);
+    height = height > 0 ? height : 0;
+    
+    CGFloat x = 0;
+    CGFloat y = -height;
+    CGFloat width = _scrollView.bounds.size.width;
+    
+    self.frame = CGRectMake(x, y, width, height);
 }
 
 #pragma mark - Prepare Refresh Views
@@ -78,7 +154,10 @@
     // 检查刷新视图，同时没有指定刷新视图，则使用默认视图
     if (_pulldownView == nil && _pullupView == nil) {
         _pulldownView = [[CZRefreshView alloc] init];
+        _pulldownView.backgroundColor = [UIColor blueColor];
+        
         _pullupView = [[CZRefreshView alloc] init];
+        _pullupView.backgroundColor = [UIColor orangeColor];
     }
 }
 

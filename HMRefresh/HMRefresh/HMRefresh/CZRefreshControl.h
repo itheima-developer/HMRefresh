@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CZRefreshView.h"
 
+/// 刷新状态枚举
+typedef NS_ENUM(NSInteger, CZRefreshState) {
+    CZRefreshStateNormal,           // 默认状态或者松开手就回到默认状态
+    CZRefreshStatePulling,          // 将要刷新 - 松开手就进入刷新的状态
+    CZRefreshStateRefreshing,       // 正在刷新
+};
+
 @interface CZRefreshControl : UIControl
 
 /// 指定构造函数
@@ -29,5 +36,8 @@
 @property (nullable, nonatomic, readonly) UIView<CZRefreshViewDelegate> *pulldownView;
 /// 上拉刷新视图
 @property (nullable, nonatomic, readonly) UIView<CZRefreshViewDelegate> *pullupView;
+
+/// 刷新状态
+@property (nonatomic, assign) CZRefreshState refreshState;
 
 @end
