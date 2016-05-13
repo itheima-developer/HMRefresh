@@ -8,11 +8,12 @@
 
 #import "HMView+TableViewController.h"
 #import <Masonry.h>
+#import "CZRefreshControl.h"
 
 static NSString *cellId = @"cellId";
 
 @interface HMView_TableViewController () <UITableViewDataSource>
-
+@property (nonatomic, weak) UITableView *tableView;
 @end
 
 @implementation HMView_TableViewController
@@ -21,6 +22,11 @@ static NSString *cellId = @"cellId";
     [super viewDidLoad];
     
     [self setupUI];
+    
+    // Add refresh control
+    CZRefreshControl *refreshControl = [[CZRefreshControl alloc] init];
+    
+    [_tableView addSubview:refreshControl];
 }
 
 #pragma mark - UITableViewDataSource
@@ -51,6 +57,8 @@ static NSString *cellId = @"cellId";
     
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellId];
     tableView.dataSource = self;
+    
+    _tableView = tableView;
 }
 
 @end

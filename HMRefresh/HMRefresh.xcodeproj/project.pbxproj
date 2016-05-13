@@ -26,6 +26,8 @@
 		C2B8DB0A1C557283006AD0A1 /* BaiduWMRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2B8DB091C557283006AD0A1 /* BaiduWMRefreshView.xib */; };
 		C2E2EE7A1CE5D4FF00C93E33 /* HMView+TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E2EE791CE5D4FF00C93E33 /* HMView+TableViewController.m */; };
 		C2E2EE7C1CE5D82200C93E33 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2E2EE7B1CE5D82200C93E33 /* Launch Screen.storyboard */; };
+		C2E2EE7F1CE5EB1600C93E33 /* CZRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E2EE7E1CE5EB1600C93E33 /* CZRefreshControl.m */; };
+		C2E2EE821CE5F4E000C93E33 /* CZRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E2EE811CE5F4E000C93E33 /* CZRefreshView.m */; };
 		C2EB654A1C520B480040A4B4 /* DemoRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2EB65491C520B480040A4B4 /* DemoRefreshView.m */; };
 		C2EB654C1C520B680040A4B4 /* DemoRefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2EB654B1C520B680040A4B4 /* DemoRefreshView.xib */; };
 		C2F95C411C6ED4CA00936BA9 /* DemoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F95C401C6ED4CA00936BA9 /* DemoModel.m */; };
@@ -70,6 +72,10 @@
 		C2E2EE781CE5D4FF00C93E33 /* HMView+TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMView+TableViewController.h"; sourceTree = "<group>"; };
 		C2E2EE791CE5D4FF00C93E33 /* HMView+TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMView+TableViewController.m"; sourceTree = "<group>"; };
 		C2E2EE7B1CE5D82200C93E33 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		C2E2EE7D1CE5EB1600C93E33 /* CZRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZRefreshControl.h; sourceTree = "<group>"; };
+		C2E2EE7E1CE5EB1600C93E33 /* CZRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZRefreshControl.m; sourceTree = "<group>"; };
+		C2E2EE801CE5F4E000C93E33 /* CZRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZRefreshView.h; sourceTree = "<group>"; };
+		C2E2EE811CE5F4E000C93E33 /* CZRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZRefreshView.m; sourceTree = "<group>"; };
 		C2EB65481C520B480040A4B4 /* DemoRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRefreshView.h; sourceTree = "<group>"; };
 		C2EB65491C520B480040A4B4 /* DemoRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoRefreshView.m; sourceTree = "<group>"; };
 		C2EB654B1C520B680040A4B4 /* DemoRefreshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoRefreshView.xib; sourceTree = "<group>"; };
@@ -196,6 +202,10 @@
 				C2456DF31C51BC8500A793A4 /* HMRefreshControl.m */,
 				C2456DEE1C51B8A000A793A4 /* HMRefreshView.h */,
 				C2456DEF1C51B8A000A793A4 /* HMRefreshView.m */,
+				C2E2EE7D1CE5EB1600C93E33 /* CZRefreshControl.h */,
+				C2E2EE7E1CE5EB1600C93E33 /* CZRefreshControl.m */,
+				C2E2EE801CE5F4E000C93E33 /* CZRefreshView.h */,
+				C2E2EE811CE5F4E000C93E33 /* CZRefreshView.m */,
 			);
 			path = HMRefresh;
 			sourceTree = "<group>";
@@ -397,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2E2EE7F1CE5EB1600C93E33 /* CZRefreshControl.m in Sources */,
 				C25056141C51EF8700EC7C67 /* SimpleCollectionViewController.m in Sources */,
 				C2B8DB081C557136006AD0A1 /* BaiduWMRefreshView.m in Sources */,
 				C2456DDF1C50D94E00A793A4 /* MainTableViewController.m in Sources */,
@@ -405,6 +416,7 @@
 				C2F95C441C6ED81B00936BA9 /* DemoListViewModel.m in Sources */,
 				C2B8DB041C557012006AD0A1 /* BaiduWMTableViewController.m in Sources */,
 				C2456DF41C51BC8500A793A4 /* HMRefreshControl.m in Sources */,
+				C2E2EE821CE5F4E000C93E33 /* CZRefreshView.m in Sources */,
 				C2456DDC1C50D8E000A793A4 /* DataModel.m in Sources */,
 				C2456DE31C50DA1C00A793A4 /* SimpleTableViewController.m in Sources */,
 				C2EB654A1C520B480040A4B4 /* DemoRefreshView.m in Sources */,
