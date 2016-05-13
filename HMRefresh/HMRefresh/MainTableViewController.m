@@ -9,6 +9,8 @@
 #import "MainTableViewController.h"
 #import "Demo/DemoControllers.h"
 
+static NSString *cellId = @"cellId";
+
 @interface MainTableViewController ()
 /// 演示控制器数组
 @property (nonatomic) NSArray <NSDictionary *>*demoControllers;
@@ -38,6 +40,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellId];
+    
+    self.title = @"刷新控件示例";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
@@ -51,7 +56,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId" forIndexPath:indexPath];
     
     NSDictionary *controllerDict = [self controllerDictWithIndexPath:indexPath];
     cell.textLabel.text = controllerDict[@"name"];
