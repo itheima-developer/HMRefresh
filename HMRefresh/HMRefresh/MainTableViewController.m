@@ -21,6 +21,11 @@ static NSString *cellId = @"cellId";
 - (NSArray<NSDictionary *> *)demoControllers {
     if (_demoControllers == nil) {
         _demoControllers = @[
+                             @{@"groupName": @"TableViews",
+                               @"controllers":
+                                   @[@{@"name": @"UIView + UITableView", @"clsName": @"HMView_TableViewController"},
+                                     ],
+                               },
                              @{@"groupName": @"表格演练",
                                @"controllers":
                                    @[@{@"name": @"简单表格演练", @"clsName": @"SimpleTableViewController"},
