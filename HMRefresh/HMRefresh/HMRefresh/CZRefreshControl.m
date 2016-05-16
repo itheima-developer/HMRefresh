@@ -96,14 +96,19 @@
     if (_scrollView.isDragging) {
         if (_refreshState == CZRefreshStateNormal && height > HMRefreshControlOffset) {
             _refreshState = CZRefreshStateWillRefresh;
+            
+            if ([_pulldownView respondsToSelector:@selector(pulldownViewWillRefresh)]) {
+                [_pulldownView pulldownViewWillRefresh];
+            }
         } else if (_refreshState == CZRefreshStateWillRefresh && height < HMRefreshControlOffset) {
             _refreshState = CZRefreshStateNormal;
         }
         
-        if ([_pulldownView respondsToSelector:@selector(pulldownViewBeginDraggingWithOffset:state:)]) {
-            [_pulldownView pulldownViewBeginDraggingWithOffset:height state:_refreshState];
+        if (_refreshState == CZRefreshStateNormal &&
+            [_pulldownView respondsToSelector:@selector(pulldownViewBeginDraggingWithOffset:)]) {
+            
+            [_pulldownView pulldownViewBeginDraggingWithOffset:height];
         }
-        
     } else {
         if (_refreshState == CZRefreshStateWillRefresh) {
             _refreshState = CZRefreshStateDidRefreshing;

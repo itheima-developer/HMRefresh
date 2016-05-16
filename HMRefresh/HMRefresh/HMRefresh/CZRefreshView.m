@@ -10,13 +10,12 @@
 
 @implementation CZRefreshView
 
-- (void)pulldownViewBeginDraggingWithOffset:(CGFloat)offset state:(CZRefreshState)state {
-    
-    if (state == CZRefreshStateNormal) {
-        NSLog(@"下拉开始刷新 %f", offset);
-    } else if (state == CZRefreshStateWillRefresh) {
-        NSLog(@"放开开始刷新 %f", offset);
-    }
+- (void)pulldownViewBeginDraggingWithOffset:(CGFloat)offset {
+    NSLog(@"下拉 %f", offset);
+}
+
+- (void)pulldownViewWillRefresh {
+    NSLog(@"将要开始刷新");
 }
 
 @end

@@ -23,10 +23,14 @@ typedef NS_ENUM(NSInteger, CZRefreshState) {
 /// 下拉刷新视图拖拽
 ///
 /// @param offset 纵向偏移量
-/// @param state  状态(CZRefreshStateNormal / CZRefreshStateWillRefresh)
 ///
 /// 提示：可以在此代理方法中，实现下拉过程中的动画效果
-- (void)pulldownViewBeginDraggingWithOffset:(CGFloat)offset state:(CZRefreshState)state;
+- (void)pulldownViewBeginDraggingWithOffset:(CGFloat)offset;
+
+/// 下拉刷新视图将要刷新
+///
+/// 提示：可以在此代理方法中，实现将要刷新的动画效果，例如转动指示器
+- (void)pulldownViewWillRefresh;
 
 @optional
 
