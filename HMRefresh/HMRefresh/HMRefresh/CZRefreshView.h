@@ -8,8 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+/// 刷新状态枚举
+typedef NS_ENUM(NSInteger, CZRefreshState) {
+    CZRefreshStateNormal,           // 默认状态或者松开手就回到默认状态
+    CZRefreshStateWillRefresh,      // 将要刷新 - 松开手就进入刷新的状态
+    CZRefreshStateDidRefreshing,    // 正在刷新
+};
+
 /// 刷新视图协议
 @protocol CZRefreshViewDelegate <NSObject>
+
+@optional
+
+/// 下拉刷新视图拖拽
+///
+/// @param offset 纵向偏移量
+/// @param state  状态(CZRefreshStateNormal / CZRefreshStateWillRefresh)
+///
+/// 提示：可以在此代理方法中，实现下拉过程中的动画效果
+- (void)pulldownViewBeginDraggingWithOffset:(CGFloat)offset state:(CZRefreshState)state;
 
 @optional
 

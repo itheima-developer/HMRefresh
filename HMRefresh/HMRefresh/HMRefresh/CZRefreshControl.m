@@ -15,6 +15,8 @@
 
 @implementation CZRefreshControl {
     __weak UIScrollView *_scrollView;
+    
+    CZRefreshState      _refreshState;
 }
 
 - (instancetype)initWithPulldownView:(UIView<CZRefreshViewDelegate> *)pulldownView pullupView:(UIView<CZRefreshViewDelegate> *)pullupView {
@@ -92,16 +94,19 @@
     
     // 下拉刷新逻辑
     if (_scrollView.isDragging) {
-        if (self.refreshState == CZRefreshStateNormal && height > HMRefreshControlOffset) {
-            self.refreshState = CZRefreshStatePulling;
-            NSLog(@"放开开始刷新");
-        } else if (self.refreshState == CZRefreshStatePulling && height < HMRefreshControlOffset) {
-            self.refreshState = CZRefreshStateNormal;
-            NSLog(@"下拉开始刷新");
+        if (_refreshState == CZRefreshStateNormal && height > HMRefreshControlOffset) {
+            _refreshState = CZRefreshStateWillRefresh;
+        } else if (_refreshState == CZRefreshStateWillRefresh && height < HMRefreshControlOffset) {
+            _refreshState = CZRefreshStateNormal;
         }
+        
+        if ([_pulldownView respondsToSelector:@selector(pulldownViewBeginDraggingWithOffset:state:)]) {
+            [_pulldownView pulldownViewBeginDraggingWithOffset:height state:_refreshState];
+        }
+        
     } else {
-        if (self.refreshState == CZRefreshStatePulling) {
-            self.refreshState = CZRefreshStateRefreshing;
+        if (_refreshState == CZRefreshStateWillRefresh) {
+            _refreshState = CZRefreshStateDidRefreshing;
             NSLog(@"开始刷新了");
         }
     }
